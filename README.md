@@ -12,14 +12,16 @@ and multiples of both with "FizzBuzz".
 One loop, conditionals, modulo. No data structures.
 One trap: check divisibility by 15 before 3 or 5.
 
-### Medium — Two Sum
+### Medium — Product of Array Except Self
 
-Given an array of integers, find the two numbers that add up to a target
-and return their indices.
+Given an integer array `nums`, return an array `output` where
+`output[i]` is the product of all elements of `nums` except `nums[i]`.
 
-Brute force is O(n²). O(n) needs a hash map:
-store each number, check if `target - num` was already seen.
-The trick is obvious once shown, unobvious before.
+The constraint: O(n) time, no division.
+Division makes this trivial (total product / self).
+Without it, you need two passes building running products
+from left and right. Intuitive once seen, but the constraint
+blocks the obvious path.
 
 ### Hard — LRU Cache
 
