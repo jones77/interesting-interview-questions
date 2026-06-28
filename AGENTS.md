@@ -6,12 +6,10 @@ Each interview question lives in a single `<short-name>.md` file under `question
 e.g. `questions/two-sum.md`, `questions/fizzbuzz.md`.
 
 Questions and their solutions are stored in separate YAML files.
-The report tool generates `.md` files from the questions only
-and leaves the solutions out.
+The report tool generates `.md` files from the questions only and leaves the solutions out.
 
 A **hint** is fine for problems where a hint is traditional.
-The hint should point at the trouble spot without showing
-the way through it.
+The hint should point at the trouble spot without showing the way through it.
 
 ## Adding a Question
 

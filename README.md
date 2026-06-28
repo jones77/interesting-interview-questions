@@ -1,9 +1,8 @@
 # Interesting Interview Questions
 
-A collection of interview programming questions assembled through
-agentic engineering with [opencode](https://opencode.ai)
-and the `big-pickle` model. Difficulty labels follow
-well-known problem ratings.
+A collection of interview programming questions assembled through agentic engineering
+with [opencode](https://opencode.ai) and the `big-pickle` model.
+Difficulty labels follow well-known problem ratings.
 
 ## Difficulty Scale
 
@@ -22,22 +21,22 @@ Given an integer array `nums`, return an array `output` where
 
 The constraint requires O(n) time and bans division.
 Division would make the problem simple.
-Nested loops give O(n²), and the faster path
-needs a different angle.
+Nested loops give O(n²), and the faster path needs a different angle.
 
 ### Hard — LRU Cache
 
 Design a data structure supporting `get` and `put` in O(1) average time,
 evicting the least recently used entry when full.
 
-O(1) get suggests a hash map. O(1) put with eviction means
-something else must track recency. Combining both correctly
-is where candidates get tangled.
+O(1) get suggests a hash map.
+O(1) put with eviction means something else must track recency.
+Combining both correctly is where candidates get tangled.
 
 ### Expert — Serialize and Deserialize Binary Tree
 
 Convert a binary tree to a string representation and back.
 
-The problem looks simple. The format needs to encode tree
-structure clearly. Edge cases like skewed trees, empty trees,
-and deep recursion separate solid solutions from shaky ones.
+The problem looks simple.
+The format needs to encode tree structure clearly.
+Edge cases like skewed trees, empty trees, and deep recursion
+separate solid solutions from shaky ones.
