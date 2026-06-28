@@ -3,7 +3,7 @@
 ## Structure
 
 Each interview question lives under `questions/<difficulty>/<short-name>/` —
-e.g. `questions/easy/two-sum/`. The `.md` file, test file, and solution stub
+e.g. `questions/easy/two-sum/`. The test file and solution stub
 all live in that directory. The solution stub's `package main` comment
 contains the problem statement so the user sees the question when they open
 the `.go` file.
