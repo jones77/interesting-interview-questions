@@ -1,9 +1,12 @@
 # Interesting Interview Questions
 
-A collection of interview programming questions assembled through agentic engineering
+Clone this repo, implement your own solutions, and make the tests pass.
+Reference solutions are in `solutions.yaml` for when you want to check
+your work — solve it first, then peek.
+
+The questions and reference solutions were assembled through agentic engineering
 with [opencode](https://opencode.ai) and the `big-pickle` model.
 Difficulty labels follow well-known problem ratings.
-Browse all questions in the [`questions/`](questions/) directory.
 
 ## Difficulty Scale
 
