@@ -42,4 +42,6 @@ Valid values: `easy`, `medium`, `hard`, `expert`. Every question must have one.
 
 ## Formatting
 
-Files should follow `.editorconfig` (`max_line_length = 120`).
+Files should follow `.editorconfig` (`max_line_length = 120`)
+and use [semantic line breaks](https://sembr.org) —
+wrap at clause boundaries, not character counts.
