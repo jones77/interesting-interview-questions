@@ -2,10 +2,11 @@
 
 ## Structure
 
-Each interview question lives in a single `<short-name>.md` file under `questions/<difficulty>/` —
-e.g. `questions/easy/two-sum.md`, `questions/easy/fizzbuzz.md`.
+Each interview question lives under `questions/<difficulty>/<short-name>/` —
+e.g. `questions/easy/two-sum/`. The `.md` file, test file, and solution stubs
+all live in that directory.
 
-Questions and their solutions are stored in separate YAML files.
+Questions and their reference solutions are stored in separate YAML files.
 The report tool generates `.md` files from the questions only and leaves the solutions out.
 
 A **hint** is fine for problems where a hint is traditional.
@@ -15,11 +16,15 @@ The hint should point at the trouble spot without showing the way through it.
 
 1. Add an entry to `questions.yaml`.
 2. Add its solution to `solutions.yaml`.
-3. Run `go run ./cmd/report/` to regenerate `.md` files.
-4. Commit `questions.yaml`, `solutions.yaml`, and the new `.md` file.
+3. Run `go run ./cmd/report/` to generate the `.md` file.
+4. Copy `templates/skeleton_solution.go.tpl` and `templates/skeleton_test.go.tpl`
+   into the question directory and implement.
+5. Commit `questions.yaml`, `solutions.yaml`, and the new question directory.
 
-`short_name` must be unique — it becomes the filename
-(e.g. `two-sum` with `easy` → `questions/easy/two-sum.md`).
+`short_name` must be unique — it becomes the directory name
+(e.g. `two-sum` with `easy` → `questions/easy/two-sum/`).
+
+## Developer Commands
 
 ## Difficulty
 
@@ -33,6 +38,7 @@ Assign based on well-known ratings (LeetCode, etc.).
 | Generate reports   | `go run ./cmd/report/`      |
 | Build all          | `go build ./...`            |
 | Test all           | `go test ./...`             |
+| Test one           | `go test ./questions/easy/two-sum/` |
 
 ## Data Files
 
