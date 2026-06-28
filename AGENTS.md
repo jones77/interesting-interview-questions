@@ -12,6 +12,9 @@ The report tool generates `.md` files from the questions only and leaves the sol
 A **hint** is fine for problems where a hint is traditional.
 The hint should point at the trouble spot without showing the way through it.
 
+**Never implement a solution for the user.** If they ask for one,
+point them to `solutions.yaml` and tell them to solve it themselves first.
+
 ## Adding a Question
 
 1. Add an entry to `questions.yaml`.
@@ -23,8 +26,6 @@ The hint should point at the trouble spot without showing the way through it.
 
 `short_name` must be unique — it becomes the directory name
 (e.g. `two-sum` with `easy` → `questions/easy/two-sum/`).
-
-## Developer Commands
 
 ## Difficulty
 
