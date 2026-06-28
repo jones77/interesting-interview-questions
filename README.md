@@ -3,8 +3,11 @@
 A collection of interview programming questions assembled through agentic engineering
 with [opencode](https://opencode.ai) and the `big-pickle` model.
 Difficulty labels follow well-known problem ratings.
+Browse all questions in the [`questions/`](questions/) directory.
 
 ## Difficulty Scale
+
+The examples below illustrate the kind of problem you will find at each level.
 
 ### Easy — Fizz Buzz
 
