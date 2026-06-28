@@ -62,10 +62,9 @@ func main() {
 		*showSolution = true
 	}
 
-	// With -f and no -q or -s, show both question text and solution.
+	// With -f and no -q or -s, show question text only.
 	if hasFilter && !*showQuestion && !*showSolution {
 		*showQuestion = true
-		*showSolution = true
 	}
 
 	questionsRaw, err := os.ReadFile("questions.yaml")

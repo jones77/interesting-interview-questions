@@ -43,7 +43,7 @@ Assign based on well-known ratings (LeetCode, etc.).
 | Test all           | `go test ./...`             |
 | Test one           | `go test ./questions/easy/two-sum/` |
 
-Run `go run ./cmd/report/ -h` for full flag documentation. Flags `-q` (questions) and `-a` (all) output YAML; `-a` is equivalent to `-q -s`. `-l` or `--list` produces the same single-line output as no flags. `-s` requires `-f` and shows just the solution for filtered questions. `-f` alone shows both question text and solution.
+Run `go run ./cmd/report/ -h` for full flag documentation. Flags `-q` (questions) and `-a` (all) output YAML; `-a` is equivalent to `-q -s`. `-l` or `--list` produces the same single-line output as no flags. `-s` requires `-f` and shows just the solution for filtered questions. `-f` alone shows just the question text.
 
 ## Data Files
 
