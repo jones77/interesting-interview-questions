@@ -1,6 +1,10 @@
 # Interesting Interview Questions
 
-A curated collection of interview programming questions organized by difficulty.
+A collection of interview programming questions curated through
+agentic engineering with [opencode](https://opencode.ai)
+and the `big-pickle` model. Every question, difficulty label, and
+convention in this repo was shaped through iterative agent-assisted
+development — not batch-generated or scrape-harvested.
 
 ## Difficulty Scale
 
