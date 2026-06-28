@@ -32,6 +32,8 @@ type QuestionOutput struct {
 func main() {
 	showQuestion := flag.Bool("q", false, "include question text")
 	flag.BoolVar(showQuestion, "questions", false, "include question text")
+	showSolution := flag.Bool("s", false, "include reference solution")
+	flag.BoolVar(showSolution, "solution", false, "include reference solution")
 	showAll := flag.Bool("a", false, "include both question text and solution")
 	flag.BoolVar(showAll, "all", false, "include both question text and solution")
 	var listMode bool
@@ -49,9 +51,9 @@ func main() {
 	flag.BoolVar(expert, "x", false, "filter by expert difficulty")
 	flag.Parse()
 
-	showSolution := *showAll
 	if *showAll {
 		*showQuestion = true
+		*showSolution = true
 	}
 
 	questionsRaw, err := os.ReadFile("questions.yaml")
@@ -90,7 +92,7 @@ func main() {
 	}
 
 	var solutions map[string]string
-	if showSolution {
+	if *showSolution {
 		solutionsRaw, err := os.ReadFile("solutions.yaml")
 		if err != nil {
 			log.Fatal(err)
@@ -100,7 +102,7 @@ func main() {
 		}
 	}
 
-	verbose := *showQuestion || showSolution
+	verbose := *showQuestion || *showSolution
 
 	var matched []QuestionOutput
 	for _, q := range questions {
@@ -121,7 +123,7 @@ func main() {
 			out.QuestionText = q.QuestionText
 			out.Hint = q.Hint
 		}
-		if showSolution {
+		if *showSolution {
 			out.Solution = solutions[q.ShortName]
 		}
 		matched = append(matched, out)
