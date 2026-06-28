@@ -5,8 +5,6 @@ import (
 	"testing"
 )
 
-// Implement: func fizzBuzz(n int) []string
-
 func TestFizzBuzz(t *testing.T) {
 	tests := []struct {
 		n    int

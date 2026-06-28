@@ -5,8 +5,6 @@ import (
 	"testing"
 )
 
-// Implement: type TreeNode struct and type Codec struct with Constructor, serialize, deserialize
-
 func TestSerializeDeserialize(t *testing.T) {
 	codec := Constructor()
 

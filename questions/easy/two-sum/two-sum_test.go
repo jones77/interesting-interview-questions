@@ -5,8 +5,6 @@ import (
 	"testing"
 )
 
-// Implement: func twoSum(nums []int, target int) []int
-
 func TestTwoSum(t *testing.T) {
 	tests := []struct {
 		nums   []int

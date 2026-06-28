@@ -4,8 +4,6 @@ import (
 	"testing"
 )
 
-// Implement: type LRUCache struct with Constructor, Get, Put
-
 func TestLRUCache(t *testing.T) {
 	cache := Constructor(2)
 	cache.Put(1, 1)

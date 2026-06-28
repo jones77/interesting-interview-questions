@@ -5,8 +5,6 @@ import (
 	"testing"
 )
 
-// Implement: func reverseString(s []byte)
-
 func TestReverseString(t *testing.T) {
 	tests := []struct {
 		s    []byte

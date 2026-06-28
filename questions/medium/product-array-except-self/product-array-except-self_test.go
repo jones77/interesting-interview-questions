@@ -5,8 +5,6 @@ import (
 	"testing"
 )
 
-// Implement: func productExceptSelf(nums []int) []int
-
 func TestProductExceptSelf(t *testing.T) {
 	tests := []struct {
 		nums []int
