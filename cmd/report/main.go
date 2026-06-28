@@ -1,61 +1,46 @@
 package main
 
 import (
-	"database/sql"
 	"fmt"
 	"log"
 	"os"
 	"strings"
 
-	_ "modernc.org/sqlite"
+	"gopkg.in/yaml.v3"
 )
 
-type question struct {
-	shortName    string
-	title        string
-	questionText string
-	hint         sql.NullString
-	difficulty   string
-	category     string
+type Question struct {
+	ShortName    string `yaml:"short_name"`
+	Title        string `yaml:"title"`
+	QuestionText string `yaml:"question_text"`
+	Hint         string `yaml:"hint,omitempty"`
+	Difficulty   string `yaml:"difficulty"`
+	Category     string `yaml:"category"`
+	Solution     string `yaml:"-"`
 }
 
 func main() {
-	db, err := sql.Open("sqlite", "interview-questions.db")
+	questionsRaw, err := os.ReadFile("questions.yaml")
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer db.Close()
-
-	if _, err := db.Exec(`CREATE TABLE IF NOT EXISTS questions (
-		id            INTEGER PRIMARY KEY,
-		short_name    TEXT NOT NULL UNIQUE,
-		title         TEXT NOT NULL,
-		question_text TEXT NOT NULL,
-		solution      TEXT NOT NULL,
-		hint          TEXT,
-		difficulty    TEXT NOT NULL DEFAULT 'medium',
-		category      TEXT NOT NULL DEFAULT 'general'
-	)`); err != nil {
+	var questions []Question
+	if err := yaml.Unmarshal(questionsRaw, &questions); err != nil {
 		log.Fatal(err)
 	}
 
-	rows, err := db.Query(`
-		SELECT short_name, title, question_text, hint, difficulty, category
-		FROM questions
-		ORDER BY category, short_name
-	`)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer rows.Close()
+	solutions := readSolutions()
 
-	var questions []question
-	for rows.Next() {
-		var q question
-		if err := rows.Scan(&q.shortName, &q.title, &q.questionText, &q.hint, &q.difficulty, &q.category); err != nil {
-			log.Fatal(err)
+	merged := 0
+	for i, q := range questions {
+		if sol, ok := solutions[q.ShortName]; ok {
+			questions[i].Solution = sol
+			merged++
 		}
-		questions = append(questions, q)
+	}
+
+	if merged != len(questions) {
+		log.Printf("warning: merged %d solutions for %d questions", merged, len(questions))
 	}
 
 	for _, q := range questions {
@@ -65,19 +50,45 @@ func main() {
 	fmt.Printf("wrote %d question files\n", len(questions))
 }
 
-func writeQuestionFile(q question) {
+func readSolutions() map[string]string {
+	raw, err := os.ReadFile("solutions.yaml")
+	if err != nil {
+		log.Fatal(err)
+	}
+	decoded := rot13(string(raw))
+	var m map[string]string
+	if err := yaml.Unmarshal([]byte(decoded), &m); err != nil {
+		log.Fatal(err)
+	}
+	return m
+}
+
+func rot13(s string) string {
+	return strings.Map(func(r rune) rune {
+		switch {
+		case 'a' <= r && r <= 'z':
+			return 'a' + (r-'a'+13)%26
+		case 'A' <= r && r <= 'Z':
+			return 'A' + (r-'A'+13)%26
+		default:
+			return r
+		}
+	}, s)
+}
+
+func writeQuestionFile(q Question) {
 	var b strings.Builder
 
-	b.WriteString(fmt.Sprintf("# %s\n\n", q.title))
-	b.WriteString(q.questionText)
+	b.WriteString(fmt.Sprintf("# %s\n\n", q.Title))
+	b.WriteString(q.QuestionText)
 	b.WriteString("\n")
 
-	if q.hint.Valid && q.hint.String != "" {
-		b.WriteString(fmt.Sprintf("\n> **Hint** — %s", q.hint.String))
+	if q.Hint != "" {
+		b.WriteString(fmt.Sprintf("\n> **Hint** — %s", q.Hint))
 		b.WriteString("\n")
 	}
 
-	path := q.shortName + ".md"
+	path := q.ShortName + ".md"
 	if err := os.WriteFile(path, []byte(b.String()), 0644); err != nil {
 		log.Fatalf("writing %s: %v", path, err)
 	}

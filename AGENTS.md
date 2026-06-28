@@ -4,15 +4,16 @@
 
 Each interview question lives in a single `<short-name>.md` file at repo root — e.g. `two-sum.md`, `fizzbuzz.md`.
 
-Questions and their solutions are stored in `interview-questions.db` (SQLite). The `.md` files are generated output containing only the question — **never include the solution** in a `.md` file.
+Questions and their solutions are stored as YAML. The `.md` files are generated output containing only the question — **never include the solution** in a `.md` file.
 
 A **rot13 hint** is permissible if hints are traditionally given for that problem.
 
 ## Adding a Question
 
-1. Run `sqlite3 interview-questions.db` and `INSERT` a new row.
-2. Run `go run ./cmd/report/` to regenerate `.md` files.
-3. Commit `interview-questions.db` and the new `.md` file.
+1. Add an entry to `questions.yaml`.
+2. Add its solution to the decoded `solutions-plain.yaml`, then run `./bin/rot13 solutions-plain.yaml > solutions.yaml` to re-encode.
+3. Run `go run ./cmd/report/` to regenerate `.md` files.
+4. Commit `questions.yaml`, `solutions.yaml`, and the new `.md` file.
 
 `short_name` must be unique — it becomes the filename (e.g. `two-sum` → `two-sum.md`).
 
@@ -24,18 +25,16 @@ A **rot13 hint** is permissible if hints are traditionally given for that proble
 | Build all          | `go build ./...`            |
 | Test all           | `go test ./...`             |
 
-## DB Schema
+## Viewing Solutions
 
-```
-questions (id, short_name, title, question_text, solution, hint, difficulty, category)
-```
-
-- `question_text` → what goes in the `.md` file (the problem statement).
-- `solution` → the answer, stored in the DB only, never written to markdown.
-- `hint` → optional rot13-ciphered hint string.
-
-## Init (first time)
+`solutions.yaml` is ROT13-encoded. Decode it with `./bin/rot13`:
 
 ```sh
-sqlite3 interview-questions.db < schema.sql
+./bin/rot13 solutions.yaml
 ```
+
+## Data Files
+
+- `questions.yaml` — question metadata and text (plaintext, committed).
+- `solutions.yaml` — ROT13-encoded short_name → solution map (committed).
+- `solutions-plain.yaml` — decoded working copy (gitignored, recreate via `./bin/rot13 solutions.yaml > solutions-plain.yaml`).

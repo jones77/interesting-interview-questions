@@ -1,0 +1,34 @@
+gjb-fhz: |
+  shap gjbFhz(ahzf []vag, gnetrg vag) []vag {
+      z := znxr(znc[vag]vag)
+      sbe v, i := enatr ahzf {
+          vs w, bx := z[gnetrg-i]; bx {
+              erghea []vag{w, v}
+          }
+          z[i] = v
+      }
+      erghea avy
+  }
+svmmohmm: |
+  shap svmmOhmm(a vag) []fgevat {
+      naf := znxr([]fgevat, a)
+      sbe v := 1; v <= a; v++ {
+          fjvgpu {
+          pnfr v%15 == 0:
+              naf[v-1] = "SvmmOhmm"
+          pnfr v%3 == 0:
+              naf[v-1] = "Svmm"
+          pnfr v%5 == 0:
+              naf[v-1] = "Ohmm"
+          qrsnhyg:
+              naf[v-1] = fgepbai.Vgbn(v)
+          }
+      }
+      erghea naf
+  }
+erirefr-fgevat: |
+  shap erirefrFgevat(f []olgr) {
+      sbe v, w := 0, yra(f)-1; v < w; v, w = v+1, w-1 {
+          f[v], f[w] = f[w], f[v]
+      }
+  }
