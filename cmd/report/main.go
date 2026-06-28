@@ -1,10 +1,10 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"log"
 	"os"
-	"strings"
 
 	"gopkg.in/yaml.v3"
 )
@@ -19,6 +19,9 @@ type Question struct {
 }
 
 func main() {
+	all := flag.Bool("all", false, "show questions with their reference solutions")
+	flag.Parse()
+
 	questionsRaw, err := os.ReadFile("questions.yaml")
 	if err != nil {
 		log.Fatal(err)
@@ -28,31 +31,30 @@ func main() {
 		log.Fatal(err)
 	}
 
+	if !*all {
+		for _, q := range questions {
+			fmt.Printf("%s (%s, %s)\n", q.ShortName, q.Difficulty, q.Category)
+		}
+		return
+	}
+
+	solutionsRaw, err := os.ReadFile("solutions.yaml")
+	if err != nil {
+		log.Fatal(err)
+	}
+	var solutions map[string]string
+	if err := yaml.Unmarshal(solutionsRaw, &solutions); err != nil {
+		log.Fatal(err)
+	}
+
 	for _, q := range questions {
-		writeQuestionFile(q)
-	}
-
-	fmt.Printf("wrote %d question files\n", len(questions))
-}
-
-func writeQuestionFile(q Question) {
-	var b strings.Builder
-
-	b.WriteString(fmt.Sprintf("# %s\n\n", q.Title))
-	b.WriteString(q.QuestionText)
-	b.WriteString("\n")
-
-	if q.Hint != "" {
-		b.WriteString(fmt.Sprintf("\n> **Hint** — %s", q.Hint))
-		b.WriteString("\n")
-	}
-
-	dir := "questions/" + q.Difficulty + "/" + q.ShortName
-	if err := os.MkdirAll(dir, 0755); err != nil {
-		log.Fatalf("creating %s: %v", dir, err)
-	}
-	path := dir + "/" + q.ShortName + ".md"
-	if err := os.WriteFile(path, []byte(b.String()), 0644); err != nil {
-		log.Fatalf("writing %s: %v", path, err)
+		fmt.Printf("%s (%s, %s)\n", q.ShortName, q.Difficulty, q.Category)
+		fmt.Println("---")
+		if sol, ok := solutions[q.ShortName]; ok {
+			fmt.Println(sol)
+		} else {
+			fmt.Println("(no solution available)")
+		}
+		fmt.Println()
 	}
 }

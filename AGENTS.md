@@ -9,7 +9,6 @@ contains the problem statement so the user sees the question when they open
 the `.go` file.
 
 Questions and their reference solutions are stored in separate YAML files.
-The report tool generates `.md` files from the questions only and leaves the solutions out.
 
 A **hint** is fine for problems where a hint is traditional.
 The hint should point at the trouble spot without showing the way through it.
@@ -21,12 +20,11 @@ point them to `solutions.yaml` and tell them to solve it themselves first.
 
 1. Add an entry to `questions.yaml`.
 2. Add its solution to `solutions.yaml`.
-3. Run `go run ./cmd/report/` to generate the `.md` file.
-4. Write a doc comment before the `package main` statement of the solution stub
+3. Write a doc comment before the `package main` statement of the solution stub
    with the problem statement (title, description, and at least one example).
    Copy `templates/skeleton_solution.go.tpl` and `templates/skeleton_test.go.tpl`
    into the question directory and implement.
-5. Commit `questions.yaml`, `solutions.yaml`, and the new question directory.
+4. Commit `questions.yaml`, `solutions.yaml`, and the new question directory.
 
 `short_name` must be unique — it becomes the directory name
 (e.g. `two-sum` with `easy` → `questions/easy/two-sum/`).
@@ -40,7 +38,8 @@ Assign based on well-known ratings (LeetCode, etc.).
 
 | Action             | Command                     |
 |--------------------|-----------------------------|
-| Generate reports   | `go run ./cmd/report/`      |
+| List questions     | `go run ./cmd/report/`      |
+| List with solutions| `go run ./cmd/report/ --all`|
 | Build all          | `go build ./...`            |
 | Test all           | `go test ./...`             |
 | Test one           | `go test ./questions/easy/two-sum/` |
