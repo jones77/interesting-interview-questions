@@ -90,7 +90,7 @@ func writeQuestionFile(q Question) {
 		b.WriteString("\n")
 	}
 
-	path := q.ShortName + ".md"
+	path := "questions/" + q.ShortName + ".md"
 	if err := os.WriteFile(path, []byte(b.String()), 0644); err != nil {
 		log.Fatalf("writing %s: %v", path, err)
 	}

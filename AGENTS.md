@@ -2,7 +2,7 @@
 
 ## Structure
 
-Each interview question lives in a single `<short-name>.md` file at repo root — e.g. `two-sum.md`, `fizzbuzz.md`.
+Each interview question lives in a single `<short-name>.md` file under `questions/` — e.g. `questions/two-sum.md`, `questions/fizzbuzz.md`.
 
 Questions and their solutions are stored as YAML. The `.md` files are generated output containing only the question — **never include the solution** in a `.md` file.
 
@@ -15,7 +15,7 @@ A **rot13 hint** is permissible if hints are traditionally given for that proble
 3. Run `go run ./cmd/report/` to regenerate `.md` files.
 4. Commit `questions.yaml`, `solutions.yaml`, and the new `.md` file.
 
-`short_name` must be unique — it becomes the filename (e.g. `two-sum` → `two-sum.md`).
+`short_name` must be unique — it becomes the filename (e.g. `two-sum` → `questions/two-sum.md`).
 
 ## Developer Commands
 
