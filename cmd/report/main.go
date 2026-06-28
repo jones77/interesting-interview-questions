@@ -20,10 +20,12 @@ type Question struct {
 }
 
 func main() {
-	questionsFilter := flag.String("q", "", "comma-separated short-names to show; 'all' for every question; also shows question text")
-	flag.StringVar(questionsFilter, "questions", "", "comma-separated short-names to show; 'all' for every question; also shows question text")
+	showQuestion := flag.Bool("q", false, "include question text")
+	flag.BoolVar(showQuestion, "questions", false, "include question text")
 	showSolution := flag.Bool("s", false, "include reference solution")
 	flag.BoolVar(showSolution, "solutions", false, "include reference solution")
+	filterFlag := flag.String("f", "", "comma-separated short-names to include (default: all)")
+	flag.StringVar(filterFlag, "filter", "", "comma-separated short-names to include (default: all)")
 	easy := flag.Bool("easy", false, "filter by easy difficulty")
 	medium := flag.Bool("medium", false, "filter by medium difficulty")
 	hard := flag.Bool("hard", false, "filter by hard difficulty")
@@ -55,13 +57,11 @@ func main() {
 		}
 	}
 
-	// Parse questions filter.
+	// Parse name filter.
 	var filterNames map[string]bool
-	showText := false
-	if *questionsFilter != "" {
-		showText = true
+	if *filterFlag != "" {
 		filterNames = map[string]bool{}
-		for _, s := range strings.Split(*questionsFilter, ",") {
+		for _, s := range strings.Split(*filterFlag, ",") {
 			s = strings.TrimSpace(s)
 			if s != "" {
 				filterNames[s] = true
@@ -81,24 +81,19 @@ func main() {
 	}
 
 	for _, q := range questions {
-		// Filter by difficulty.
 		if len(wantDifficulty) > 0 && !wantDifficulty[q.Difficulty] {
 			continue
 		}
-		// Filter by short-name.
-		if filterNames != nil {
-			if !filterNames[q.ShortName] && !filterNames["all"] && !filterNames["*"] {
-				continue
-			}
+		if filterNames != nil && !filterNames[q.ShortName] {
+			continue
 		}
 
 		fmt.Printf("%s (%s, %s) — %s\n", q.ShortName, q.Difficulty, q.Category, q.Title)
 
-		if showText {
+		if *showQuestion {
 			fmt.Println()
 			fmt.Println(q.QuestionText)
 		}
-
 		if *showSolution {
 			fmt.Println("---")
 			if sol, ok := solutions[q.ShortName]; ok {
@@ -107,7 +102,6 @@ func main() {
 				fmt.Println("(no solution available)")
 			}
 		}
-
 		fmt.Println()
 	}
 }
