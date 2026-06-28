@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+set -euo pipefail
+cd "$(dirname "$0")/.."
+
+if [ "${FORCE:-}" != "1" ]; then
+	# ---- Phase 1: detect implementations -------------------------------
+	echo ":: checking for implemented stubs"
+
+	tmp=$(mktemp -d)
+	trap 'rm -rf "$tmp"' EXIT
+
+	while IFS= read -r f; do
+		mkdir -p "$tmp/$(dirname "$f")"
+		cp "$f" "$tmp/$f"
+	done < <(find questions -name '*.go' -not -name '*_test.go')
+
+	go run ./cmd/generate/ 1>/dev/null
+
+	dirty=false
+	while IFS= read -r f; do
+		if ! diff -q "$f" "$tmp/$f" >/dev/null 2>&1; then
+			echo "  dirty: $f"
+			dirty=true
+		fi
+	done < <(find questions -name '*.go' -not -name '*_test.go')
+
+	if $dirty; then
+		find "$tmp/questions" -name '*.go' -not -name '*_test.go' | while IFS= read -r saved; do
+			rel="${saved#$tmp/}"
+			cp "$saved" "$rel"
+		done
+		echo ""
+		echo "Aborting — stubs have been modified (implemented?)."
+		echo "Set FORCE=1 to overwrite."
+		exit 1
+	fi
+
+	echo "  all clean"
+	echo ""
+else
+	echo ":: forced regeneration"
+	go run ./cmd/generate/ 1>/dev/null
+	echo ""
+fi
+
+# ---- Phase 2: build ----------------------------------------------------
+echo ":: go build ./..."
+go build ./...
+echo "  ok"
+echo ""
+
+echo "All checks passed."

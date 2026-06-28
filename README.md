@@ -1,56 +1,70 @@
 # Interesting Interview Questions
 
 Clone this repo, implement your own solutions, and make the tests pass.
-Reference solutions are in `solutions.yaml` for when you want to check
+Reference solutions are in `questions.yaml` for when you want to check
 your work — solve it first, then peek.
 
-Each question lives in `questions/<difficulty>/<short-name>/`.
-Open the `.go` file to see the problem statement and write your solution.
-Make the tests in `*_test.go` pass.
+## For Users
+
+```bash
+# Clone and cd in
+git clone <repo-url>
+cd interesting-interview-questions
+
+# Run tests for all questions
+go test ./...
+
+# Run tests for a single question
+go test ./questions/easy/two-sum/
+
+# List available questions
+go run ./cmd/report/
+
+# Show question text and solution for specific ones
+go run ./cmd/report/ -f two-sum,fizzbuzz -s
+
+# Filter by difficulty
+go run ./cmd/report/ -d easy,medium
+```
+
+1. Pick a question (`go run ./cmd/report/`).
+2. Open the stub — the problem statement is in the doc comment.
+3. Implement your solution in the function body.
+4. Run the tests (`go test ./questions/<difficulty>/<short-name>/`).
+5. Green? Check the official solution in `questions.yaml` (under `solution`).
+6. Red? Debug and try again.
+
+## For Maintainers
+
+`questions.yaml` is the single source of truth for question metadata
+and Go function signatures. Stub `.go` files are generated from it.
+
+```bash
+# Regenerate stubs and verify everything builds
+./bin/sync
+
+# Overwrite implemented stubs during regeneration
+FORCE=1 ./bin/sync
+```
+
+To add a question:
+
+1. Add an entry to `questions.yaml`
+   (see existing entries for the `signature` / `kind` format).
+2. Add a `solution` field to the entry in `questions.yaml`.
+3. Write a test file at
+   `questions/<difficulty>/<short-name>/<short-name>_test.go`.
+4. Run `./bin/sync` to regenerate the stub.
+5. Commit `questions.yaml` and the new directory.
 
 ## Difficulty Scale
 
-The examples below illustrate the kind of problem you will find at each level.
+Questions progress from straightforward loops to complex design problems.
+Each directory in `questions/` is one of four levels:
 
-### Easy — Fizz Buzz
-
-[`questions/easy/fizzbuzz/fizzbuzz.go`](questions/easy/fizzbuzz/fizzbuzz.go)
-
-Print numbers 1 to n, replacing multiples of 3 with "Fizz",
-multiples of 5 with "Buzz", and multiples of both with "FizzBuzz".
-
-One loop, conditionals, and modulo. No data structures needed.
-The order of conditionals is the only trap.
-
-### Medium — Product of Array Except Self
-
-[`questions/medium/product-array-except-self/product-array-except-self.go`](questions/medium/product-array-except-self/product-array-except-self.go)
-
-Given an integer array `nums`, return an array `output` where
-`output[i]` is the product of all elements of `nums` except `nums[i]`.
-
-The constraint requires O(n) time and bans division.
-Division would make the problem simple.
-Nested loops give O(n²), and the faster path needs a different angle.
-
-### Hard — LRU Cache
-
-[`questions/hard/lru-cache/lru-cache.go`](questions/hard/lru-cache/lru-cache.go)
-
-Design a data structure supporting `get` and `put` in O(1) average time,
-evicting the least recently used entry when full.
-
-O(1) get suggests a hash map.
-O(1) put with eviction means something else must track recency.
-Combining both correctly is where candidates get tangled.
-
-### Expert — Serialize and Deserialize Binary Tree
-
-[`questions/expert/serialize-deserialize-binary-tree/serialize-deserialize-binary-tree.go`](questions/expert/serialize-deserialize-binary-tree/serialize-deserialize-binary-tree.go)
-
-Convert a binary tree to a string representation and back.
-
-The problem looks simple.
-The format needs to encode tree structure clearly.
-Edge cases like skewed trees, empty trees, and deep recursion
-separate solid solutions from shaky ones.
+| Level | Example | What to expect |
+|-------|---------|----------------|
+| Easy  | Fizz Buzz (`questions/easy/fizzbuzz/`) | One loop, conditionals, modulo — no data structures |
+| Medium | Product of Array Except Self (`questions/medium/product-array-except-self/`) | O(n) time, no division — needs a different angle |
+| Hard  | LRU Cache (`questions/hard/lru-cache/`) | Design a data structure with O(1) get and put with eviction |
+| Expert | Count of Smaller Numbers After Self (`questions/expert/count-smaller-numbers-after-self/`) | Fenwick tree or merge sort; complex O(n log n) |

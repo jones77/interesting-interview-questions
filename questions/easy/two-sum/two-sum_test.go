@@ -1,8 +1,8 @@
-package main
+package twosum_test
 
 import (
-	"reflect"
-	"sort"
+	"github.com/jones/interesting-interview-questions/internal/testutil"
+	"github.com/jones/interesting-interview-questions/questions/easy/two-sum"
 	"testing"
 )
 
@@ -17,12 +17,7 @@ func TestTwoSum(t *testing.T) {
 		{[]int{3, 3}, 6, []int{0, 1}},
 	}
 	for _, tt := range tests {
-		got := twoSum(tt.nums, tt.target)
-		want := tt.want
-		sort.Ints(got)
-		sort.Ints(want)
-		if !reflect.DeepEqual(got, want) {
-			t.Errorf("twoSum(%v, %d) = %v, want %v", tt.nums, tt.target, got, tt.want)
-		}
+		got := twosum.TwoSum(tt.nums, tt.target)
+		testutil.AssertEqualSliceInt(t, got, tt.want)
 	}
 }

@@ -1,2 +1,6 @@
-/report
-
+*.exe
+*.test
+*.out
+interesting-interview-questions
+.DS_Store
+questions.yaml.bak

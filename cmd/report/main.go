@@ -7,100 +7,108 @@ import (
 	"os"
 	"strings"
 
+	"github.com/jones/interesting-interview-questions/internal/question"
 	"gopkg.in/yaml.v3"
 )
-
-type Question struct {
-	ShortName    string `yaml:"short_name"`
-	Title        string `yaml:"title"`
-	QuestionText string `yaml:"question_text"`
-	Hint         string `yaml:"hint,omitempty"`
-	Difficulty   string `yaml:"difficulty"`
-	Category     string `yaml:"category"`
-}
 
 type QuestionOutput struct {
 	ShortName    string `yaml:"short_name"`
 	Title        string `yaml:"title"`
-	QuestionText string `yaml:"question_text,omitempty"`
-	Hint         string `yaml:"hint,omitempty"`
 	Difficulty   string `yaml:"difficulty"`
 	Category     string `yaml:"category"`
+	Frequency    string `yaml:"frequency"`
+	URL          string `yaml:"url,omitempty"`
+	QuestionText string `yaml:"question_text,omitempty"`
 	Solution     string `yaml:"solution,omitempty"`
 }
 
 func main() {
-	showQuestion := flag.Bool("q", false, "include question text")
-	flag.BoolVar(showQuestion, "questions", false, "include question text")
-	showSolution := flag.Bool("s", false, "include reference solution (requires -f)")
-	flag.BoolVar(showSolution, "solution", false, "include reference solution (requires -f)")
-	showAll := flag.Bool("a", false, "include both question text and solution")
-	flag.BoolVar(showAll, "all", false, "include both question text and solution")
-	var listMode bool
-	flag.BoolVar(&listMode, "l", false, "list questions (default)")
-	flag.BoolVar(&listMode, "list", false, "list questions (default)")
-	filterFlag := flag.String("f", "", "comma-separated short-names to include (default: all)")
-	flag.StringVar(filterFlag, "filter", "", "comma-separated short-names to include (default: all)")
-	easy := flag.Bool("easy", false, "filter by easy difficulty")
-	flag.BoolVar(easy, "e", false, "filter by easy difficulty")
-	medium := flag.Bool("medium", false, "filter by medium difficulty")
-	flag.BoolVar(medium, "m", false, "filter by medium difficulty")
-	hard := flag.Bool("hard", false, "filter by hard difficulty")
-	flag.BoolVar(hard, "d", false, "filter by hard difficulty")
-	expert := flag.Bool("expert", false, "filter by expert difficulty")
-	flag.BoolVar(expert, "x", false, "filter by expert difficulty")
-	flag.Parse()
+	var (
+		showQuestions bool
+		showSolution  bool
+		showAll       bool
+		filterFlag    string
+		diffFlag      string
+	)
 
-	hasFilter := *filterFlag != ""
+	type flagDef struct{ short, long, usage string }
+	var flagDefs []flagDef
 
-	if *showAll && hasFilter {
-		log.Fatal("-a and -f are mutually exclusive")
+	regBool := func(short, long, usage string, p *bool) {
+		flagDefs = append(flagDefs, flagDef{short, long, usage})
+		flag.BoolVar(p, short, false, "")
+		flag.BoolVar(p, long, false, "")
 	}
-	if *showAll && *showSolution {
-		log.Fatal("-a and -s are mutually exclusive")
-	}
-	if *showSolution && !hasFilter {
-		log.Fatal("-s requires -f")
+	regString := func(short, long, usage string, p *string) {
+		flagDefs = append(flagDefs, flagDef{short, long, usage})
+		flag.StringVar(p, short, "", "")
+		flag.StringVar(p, long, "", "")
 	}
 
-	if *showAll {
-		*showQuestion = true
-		*showSolution = true
-	}
-
-	// With -f and no -q or -s, show question text only.
-	if hasFilter && !*showQuestion && !*showSolution {
-		*showQuestion = true
-	}
-
-	questionsRaw, err := os.ReadFile("questions.yaml")
+	allQuestions, err := question.LoadAll("questions.yaml")
 	if err != nil {
 		log.Fatal(err)
 	}
-	var questions []Question
-	if err := yaml.Unmarshal(questionsRaw, &questions); err != nil {
-		log.Fatal(err)
+
+	counts := map[string]int{}
+	for _, q := range allQuestions {
+		counts[q.Difficulty]++
+	}
+	parts := []string{fmt.Sprintf("%d total", len(allQuestions))}
+	for _, d := range []string{"easy", "medium", "hard", "expert"} {
+		if c := counts[d]; c > 0 {
+			parts = append(parts, fmt.Sprintf("%d %s", c, d))
+		}
+	}
+	summary := strings.Join(parts, ", ")
+
+	regBool("a", "all", "both question text and solution (YAML) for every question", &showAll)
+	regString("d", "difficulty", "comma-separated difficulty filter (easy,medium,hard,expert)", &diffFlag)
+	regString("f", "filter", "filter by comma-separated short-names; shows question text (YAML)", &filterFlag)
+	regBool("q", "questions", fmt.Sprintf("question text (YAML) for all questions (%s)", summary), &showQuestions)
+	regBool("s", "solution", "include solution with -f (YAML); requires -f", &showSolution)
+	flagDefs = append(flagDefs, flagDef{"h", "help", "show this help"})
+
+	flag.Usage = func() {
+		fmt.Fprintf(flag.CommandLine.Output(), "Usage of %s:\n", os.Args[0])
+		for _, f := range flagDefs {
+			fmt.Fprintf(flag.CommandLine.Output(), "  -%s, --%s\n    \t%s\n", f.short, f.long, f.usage)
+		}
+	}
+
+	flag.Parse()
+
+	if showAll && filterFlag != "" {
+		log.Fatal("-a and -f are mutually exclusive")
+	}
+	if showAll && showSolution {
+		log.Fatal("-a and -s are mutually exclusive")
+	}
+	if showSolution && filterFlag == "" {
+		log.Fatal("-s requires -f")
+	}
+
+	if showAll {
+		showQuestions = true
+		showSolution = true
+	}
+
+	if filterFlag != "" && !showQuestions {
+		showQuestions = true
 	}
 
 	wantDifficulty := map[string]bool{}
-	for _, d := range []struct {
-		on   bool
-		name string
-	}{
-		{*easy, "easy"},
-		{*medium, "medium"},
-		{*hard, "hard"},
-		{*expert, "expert"},
-	} {
-		if d.on {
-			wantDifficulty[d.name] = true
+	for _, s := range strings.Split(diffFlag, ",") {
+		s = strings.TrimSpace(s)
+		if s != "" {
+			wantDifficulty[s] = true
 		}
 	}
 
 	var filterNames map[string]bool
-	if hasFilter {
+	if filterFlag != "" {
 		filterNames = map[string]bool{}
-		for _, s := range strings.Split(*filterFlag, ",") {
+		for _, s := range strings.Split(filterFlag, ",") {
 			s = strings.TrimSpace(s)
 			if s != "" {
 				filterNames[s] = true
@@ -108,40 +116,29 @@ func main() {
 		}
 	}
 
-	var solutions map[string]string
-	if *showSolution {
-		solutionsRaw, err := os.ReadFile("solutions.yaml")
-		if err != nil {
-			log.Fatal(err)
-		}
-		if err := yaml.Unmarshal(solutionsRaw, &solutions); err != nil {
-			log.Fatal(err)
-		}
-	}
-
-	verbose := hasFilter || *showQuestion || *showAll
+	verbose := filterFlag != "" || showQuestions || showAll
 
 	var matched []QuestionOutput
-	for _, q := range questions {
-		if len(wantDifficulty) > 0 && !wantDifficulty[q.Difficulty] {
+	for _, s := range allQuestions {
+		if len(wantDifficulty) > 0 && !wantDifficulty[s.Difficulty] {
 			continue
 		}
-		if filterNames != nil && !filterNames[q.ShortName] {
+		if filterNames != nil && !filterNames[s.ShortName] {
 			continue
 		}
-
 		out := QuestionOutput{
-			ShortName:  q.ShortName,
-			Title:      q.Title,
-			Difficulty: q.Difficulty,
-			Category:   q.Category,
+			ShortName:  s.ShortName,
+			Title:      s.Title,
+			Difficulty: s.Difficulty,
+			Category:   s.Category,
+			Frequency:  s.Frequency,
+			URL:        s.URL,
 		}
-		if *showQuestion {
-			out.QuestionText = q.QuestionText
-			out.Hint = q.Hint
+		if showQuestions {
+			out.QuestionText = s.QuestionText
 		}
-		if *showSolution {
-			out.Solution = solutions[q.ShortName]
+		if showSolution {
+			out.Solution = s.Solution
 		}
 		matched = append(matched, out)
 	}
@@ -154,7 +151,7 @@ func main() {
 		fmt.Print(string(outRaw))
 	} else {
 		for _, m := range matched {
-			fmt.Printf("%s (%s, %s) — %s\n", m.ShortName, m.Difficulty, m.Category, m.Title)
+			fmt.Printf("%s (%s/%s, %s) — %s\n", m.ShortName, m.Difficulty, m.Frequency, m.Category, m.Title)
 		}
 	}
 }

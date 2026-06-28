@@ -2,55 +2,45 @@
 
 ## Structure
 
-Each interview question lives under `questions/<difficulty>/<short-name>/` —
-e.g. `questions/easy/two-sum/`. The test file and solution stub
-all live in that directory. The solution stub's `package main` comment
-contains the problem statement so the user sees the question when they open
-the `.go` file.
+Each question lives in `questions/<difficulty>/<short-name>/` with:
+a generated stub (`<short-name>.go`), a test file (`<short-name>_test.go`),
+and a `package main` doc comment.
 
-Questions and their reference solutions are stored in separate YAML files.
+`questions.yaml` is the single source of truth for titles, difficulties,
+categories, frequency, Go function signatures, and reference solutions.
+**Never write a solution into a `.go` file** — only put stubs there.
+If asked for a solution, point to the `solution` field in `questions.yaml`.
 
-A **hint** is fine for problems where a hint is traditional.
-The hint should point at the trouble spot without showing the way through it.
-
-**Never implement a solution for the user.** If they ask for one,
-point them to `solutions.yaml` and tell them to solve it themselves first.
+Questions and solutions are drawn from the model's training data, which may
+include content from public coding platforms (LeetCode, HackerRank, etc.)
+as well as other sources. They are not copied from a single site.
 
 ## Adding a Question
 
-1. Add an entry to `questions.yaml`.
-2. Add its solution to `solutions.yaml`.
-3. Write a doc comment before the `package main` statement of the solution stub
-   with the problem statement (title, description, and at least one example).
-   Copy `templates/skeleton_solution.go.tpl` and `templates/skeleton_test.go.tpl`
-   into the question directory and implement.
-4. Commit `questions.yaml`, `solutions.yaml`, and the new question directory.
+1. Add entry to `questions.yaml` (include `signature` for function-style
+   questions or `kind` for struct-style — see existing entries).
+2. Add a `solution` field to the entry in `questions.yaml`.
+3. Write a test file at `questions/<difficulty>/<short-name>/<short-name>_test.go`.
+4. Run `./bin/sync` to regenerate the stub `.go` file.
+5. Commit `questions.yaml` and the new directory.
 
-`short_name` must be unique — it becomes the directory name
-(e.g. `two-sum` with `easy` → `questions/easy/two-sum/`).
+`short_name` must be unique — it becomes the directory name.
 
-## Difficulty
+## Commands
 
-Valid values: `easy`, `medium`, `hard`, `expert`. Every question needs one.
-Assign based on well-known ratings (LeetCode, etc.).
+| Action             | Command                                  |
+|--------------------|------------------------------------------|
+| Build all          | `go build ./...`                         |
+| Test all           | `go test ./...`                          |
+| Test one           | `go test ./questions/easy/two-sum/`      |
+| List / query       | `go run ./cmd/report/`                   |
+| Flag docs          | `go run ./cmd/report/ -h`                |
+| Generate stubs     | `./bin/sync`                          |
+| Force-regenerate   | `FORCE=1 ./bin/sync`                  |
 
-## Developer Commands
+## Style
 
-| Action             | Command                     |
-|--------------------|-----------------------------|
-| List questions     | `go run ./cmd/report/`      |
-| Build all          | `go build ./...`            |
-| Test all           | `go test ./...`             |
-| Test one           | `go test ./questions/easy/two-sum/` |
-
-Run `go run ./cmd/report/ -h` for full flag documentation. Flags `-q` (questions) and `-a` (all) output YAML; `-a` is equivalent to `-q -s`. `-l` or `--list` produces the same single-line output as no flags. `-s` requires `-f` and shows just the solution for filtered questions. `-f` alone shows just the question text. `-a` and `-f` are mutually exclusive.
-
-## Data Files
-
-- `questions.yaml` — question metadata and text (plaintext, committed).
-- `solutions.yaml` — short_name to solution map (plaintext, committed).
-
-## Formatting
-
-Files should follow `.editorconfig` with a 120-character line limit.
-Use [semantic line breaks](https://sembr.org) and wrap at clause boundaries.
+`.editorconfig` enforces 120-char lines,
+2-space indent for YAML/Markdown,
+tabs for Go files (gofmt standard).
+Use [semantic line breaks](https://sembr.org).

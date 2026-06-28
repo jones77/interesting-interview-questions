@@ -1,6 +1,7 @@
-package main
+package productarrayexceptself_test
 
 import (
+	"github.com/jones/interesting-interview-questions/questions/medium/product-array-except-self"
 	"reflect"
 	"testing"
 )
@@ -14,9 +15,9 @@ func TestProductExceptSelf(t *testing.T) {
 		{[]int{-1, 1, 0, -3, 3}, []int{0, 0, 9, 0, 0}},
 	}
 	for _, tt := range tests {
-		got := productExceptSelf(tt.nums)
+		got := productarrayexceptself.ProductExceptSelf(tt.nums)
 		if !reflect.DeepEqual(got, tt.want) {
-			t.Errorf("productExceptSelf(%v) = %v, want %v", tt.nums, got, tt.want)
+			t.Errorf("productarrayexceptself.ProductExceptSelf(%v) = %v, want %v", tt.nums, got, tt.want)
 		}
 	}
 }

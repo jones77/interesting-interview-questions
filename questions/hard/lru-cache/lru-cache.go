@@ -1,36 +1,44 @@
-// LRU Cache
-//
-// Design a data structure that follows the constraints of a Least Recently
-// Used (LRU) cache.
-//
-// Implement the LRUCache class:
-//   - LRUCache(capacity) initialise with positive size capacity
-//   - int get(key) return the value if the key exists, otherwise -1
-//   - void put(key, value) update or insert the key-value pair; evict the
-//     least recently used key if the number of keys exceeds capacity
-//
-// Both get and put must run in O(1) average time.
-//
-// Example:
-//   Input
-//   ["LRUCache","put","put","get","put","get","put","get","get","get"]
-//   [[2],[1,1],[2,2],[1],[3,3],[2],[4,4],[1],[3],[4]]
-//   Output
-//   [null,null,null,1,null,-1,null,-1,3,4]
+package lrucache
 
-package main
+/*
+LRUCache solves LRU Cache.
 
+Design a data structure that follows the constraints of a **Least Recently Used (LRU) cache**.
+
+Implement the `LRUCache` class:
+
+- `LRUCache(int capacity)` Initialize the LRU cache with **positive** size `capacity`.
+- `int get(int key)` Return the value of the `key` if the key exists, otherwise return `-1`.
+- `void put(int key, int value)` Update the value of the `key` if the `key` exists. Otherwise, add the key-value pair to the cache. If the number of keys exceeds the `capacity` from this operation, **evict** the least recently used key.
+
+The functions `get` and `put` must each run in O(1) average time complexity.
+
+**Example:**
+
+```
+Input
+["LRUCache", "put", "put", "get", "put", "get", "put", "get", "get", "get"]
+[[2], [1, 1], [2, 2], [1], [3, 3], [2], [4, 4], [1], [3], [4]]
+
+Output
+[null, null, null, 1, null, -1, null, -1, 3, 4]
+```
+
+**Constraints:**
+
+- `1 <= capacity <= 3000`
+- `0 <= key <= 10^4`
+- `0 <= value <= 10^5`
+- At most `2 * 10^5` calls will be made to `get` and `put`.
+*/
 type LRUCache struct{}
 
-func Constructor(capacity int) LRUCache {
-	return LRUCache{}
+func Constructor(capacity int) *LRUCache {
+	return &LRUCache{}
 }
 
 func (c *LRUCache) Get(key int) int {
 	return -1
 }
 
-func (c *LRUCache) Put(key int, value int) {
-}
-
-func main() {}
+func (c *LRUCache) Put(key int, value int) {}

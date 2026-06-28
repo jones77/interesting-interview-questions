@@ -1,7 +1,148 @@
+- short_name: fizzbuzz
+  title: Fizz Buzz
+  difficulty: easy
+  category: general
+  frequency: common
+  signature: fizzBuzz(n int) []string
+  url: https://leetcode.com/problems/fizz-buzz/
+  question_text: |
+    Given an integer `n`, return a string array `answer` (1-indexed) where:
+
+    - `answer[i] == "FizzBuzz"` if `i` is divisible by 3 and 5.
+    - `answer[i] == "Fizz"` if `i` is divisible by 3.
+    - `answer[i] == "Buzz"` if `i` is divisible by 5.
+    - `answer[i] == i` (as a string) otherwise.
+
+    **Example 1:**
+
+    ```
+    Input: n = 3
+    Output: ["1","2","Fizz"]
+    ```
+
+    **Example 2:**
+
+    ```
+    Input: n = 5
+    Output: ["1","2","Fizz","4","Buzz"]
+    ```
+
+    **Example 3:**
+
+    ```
+    Input: n = 15
+    Output: ["1","2","Fizz","4","Buzz","Fizz","7","8","Fizz","Buzz","11","Fizz","13","14","FizzBuzz"]
+    ```
+
+    **Constraints:**
+
+    - `1 <= n <= 10^4`
+  solution: |
+    func fizzBuzz(n int) []string {
+        ans := make([]string, n)
+        for i := 1; i <= n; i++ {
+            switch {
+            case i%15 == 0:
+                ans[i-1] = "FizzBuzz"
+            case i%3 == 0:
+                ans[i-1] = "Fizz"
+            case i%5 == 0:
+                ans[i-1] = "Buzz"
+            default:
+                ans[i-1] = strconv.Itoa(i)
+            }
+        }
+        return ans
+    }
+- short_name: happy-number
+  title: Happy Number
+  difficulty: easy
+  category: math
+  frequency: uncommon
+  signature: isHappy(n int) bool
+  url: https://leetcode.com/problems/happy-number/
+  question_text: |
+    A happy number is a number defined by the following process:
+    Starting with any positive integer, replace the number by the sum of
+    the squares of its digits, and repeat until the number equals 1, or
+    it loops endlessly in a cycle that does not include 1. Return true
+    if the number is happy.
+
+    **Example 1:**
+
+    ```
+    Input: n = 19
+    Output: true
+    Explanation: 1² + 9² = 82, 8² + 2² = 68, 6² + 8² = 100, 1² + 0² + 0² = 1
+    ```
+
+    **Example 2:**
+
+    ```
+    Input: n = 2
+    Output: false
+    ```
+
+    **Constraints:**
+
+    - `1 <= n <= 2³¹ - 1`
+  solution: |
+    func isHappy(n int) bool {
+        seen := map[int]bool{}
+        for n != 1 && !seen[n] {
+            seen[n] = true
+            sum := 0
+            for x := n; x > 0; x /= 10 {
+                d := x % 10
+                sum += d * d
+            }
+            n = sum
+        }
+        return n == 1
+    }
+- short_name: reverse-string
+  title: Reverse String
+  difficulty: easy
+  category: strings
+  frequency: common
+  signature: reverseString(s []byte)
+  url: https://leetcode.com/problems/reverse-string/
+  question_text: |
+    Write a function that reverses a string. The input string is given as an array of characters `s`.
+
+    You must do this by modifying the input array in-place with O(1) extra memory.
+
+    **Example 1:**
+
+    ```
+    Input: s = ["h","e","l","l","o"]
+    Output: ["o","l","l","e","h"]
+    ```
+
+    **Example 2:**
+
+    ```
+    Input: s = ["H","a","n","n","a","h"]
+    Output: ["h","a","n","n","a","H"]
+    ```
+
+    **Constraints:**
+
+    - `1 <= s.length <= 10^5`
+    - `s[i]` is a printable ascii character.
+  solution: |
+    func reverseString(s []byte) {
+        for i, j := 0, len(s)-1; i < j; i, j = i+1, j-1 {
+            s[i], s[j] = s[j], s[i]
+        }
+    }
 - short_name: two-sum
   title: Two Sum
   difficulty: easy
   category: arrays
+  frequency: common
+  signature: twoSum(nums []int, target int) []int
+  url: https://leetcode.com/problems/two-sum/
   question_text: |
     Given an array of integers `nums` and an integer `target`, return indices of the two numbers that add up to `target`.
 
@@ -39,106 +180,387 @@
     - Only one valid answer exists.
 
     **Follow-up:** Can you come up with an algorithm that is less than O(n²) time complexity?
-
-- short_name: fizzbuzz
-  title: Fizz Buzz
-  difficulty: easy
-  category: general
-  question_text: |
-    Given an integer `n`, return a string array `answer` (1-indexed) where:
-
-    - `answer[i] == "FizzBuzz"` if `i` is divisible by 3 and 5.
-    - `answer[i] == "Fizz"` if `i` is divisible by 3.
-    - `answer[i] == "Buzz"` if `i` is divisible by 5.
-    - `answer[i] == i` (as a string) otherwise.
-
-    **Example 1:**
-
-    ```
-    Input: n = 3
-    Output: ["1","2","Fizz"]
-    ```
-
-    **Example 2:**
-
-    ```
-    Input: n = 5
-    Output: ["1","2","Fizz","4","Buzz"]
-    ```
-
-    **Example 3:**
-
-    ```
-    Input: n = 15
-    Output: ["1","2","Fizz","4","Buzz","Fizz","7","8","Fizz","Buzz","11","Fizz","13","14","FizzBuzz"]
-    ```
-
-    **Constraints:**
-
-    - `1 <= n <= 10^4`
-
-- short_name: reverse-string
-  title: Reverse String
-  difficulty: easy
-  category: strings
-  question_text: |
-    Write a function that reverses a string. The input string is given as an array of characters `s`.
-
-    You must do this by modifying the input array in-place with O(1) extra memory.
-
-    **Example 1:**
-
-    ```
-    Input: s = ["h","e","l","l","o"]
-    Output: ["o","l","l","e","h"]
-    ```
-
-    **Example 2:**
-
-    ```
-    Input: s = ["H","a","n","n","a","h"]
-    Output: ["h","a","n","n","a","H"]
-    ```
-
-    **Constraints:**
-
-    - `1 <= s.length <= 10^5`
-    - `s[i]` is a printable ascii character.
-
-- short_name: product-array-except-self
-  title: Product of Array Except Self
-  difficulty: medium
+  solution: |
+    func twoSum(nums []int, target int) []int {
+        m := make(map[int]int)
+        for i, v := range nums {
+            if j, ok := m[target-v]; ok {
+                return []int{j, i}
+            }
+            m[v] = i
+        }
+        return nil
+    }
+- short_name: count-smaller-numbers-after-self
+  title: Count of Smaller Numbers After Self
+  difficulty: expert
   category: arrays
+  frequency: rare
+  signature: countSmaller(nums []int) []int
+  url: https://leetcode.com/problems/count-of-smaller-numbers-after-self/
   question_text: |
-    Given an integer array `nums`, return an array `answer` such that `answer[i]` is equal to the product of all the elements of `nums` except `nums[i]`.
-
-    The product of any prefix or suffix of `nums` is guaranteed to fit in a 32-bit integer.
-
-    You must write an algorithm that runs in O(n) time and without using the division operation.
+    Given an integer array `nums`, return an integer array `counts` where
+    `counts[i]` is the number of smaller elements to the right of `nums[i]`.
 
     **Example 1:**
 
     ```
-    Input: nums = [1,2,3,4]
-    Output: [24,12,8,6]
+    Input: nums = [5,2,6,1]
+    Output: [2,1,1,0]
+    Explanation:
+    - 5 has 2 smaller: 2 and 1
+    - 2 has 1 smaller: 1
+    - 6 has 1 smaller: 1
+    - 1 has 0 smaller
     ```
 
     **Example 2:**
 
     ```
-    Input: nums = [-1,1,0,-3,3]
-    Output: [0,0,9,0,0]
+    Input: nums = [-1,-1]
+    Output: [0,0]
     ```
 
     **Constraints:**
 
-    - `2 <= nums.length <= 10^5`
-    - `-30 <= nums[i] <= 30`
+    - `1 <= nums.length <= 10^5`
+    - `-10^4 <= nums[i] <= 10^4`
+  solution: |
+    type fenwick struct {
+        tree []int
+    }
 
+    func (f *fenwick) add(i int) {
+        for i < len(f.tree) {
+            f.tree[i]++
+            i += i & -i
+        }
+    }
+
+    func (f *fenwick) sum(i int) int {
+        s := 0
+        for i > 0 {
+            s += f.tree[i]
+            i -= i & -i
+        }
+        return s
+    }
+
+    func countSmaller(nums []int) []int {
+      if len(nums) == 0 {
+          return []int{}
+      }
+        min, max := nums[0], nums[0]
+        for _, v := range nums {
+            if v < min {
+                min = v
+            }
+            if v > max {
+                max = v
+            }
+        }
+        offset := 1 - min
+        size := max - min + 2
+        bit := &fenwick{tree: make([]int, size)}
+        ans := make([]int, len(nums))
+        for i := len(nums) - 1; i >= 0; i-- {
+            idx := nums[i] + offset
+            ans[i] = bit.sum(idx - 1)
+            bit.add(idx)
+        }
+        return ans
+    }
+- short_name: alien-dictionary
+  title: Alien Dictionary
+  difficulty: hard
+  category: graph
+  frequency: uncommon
+  signature: alienOrder(words []string) string
+  url: https://leetcode.com/problems/alien-dictionary/
+  question_text: |
+    There is a new alien language which uses the Latin alphabet. The order
+    of letters is unknown to you. You receive a list of non-empty words
+    from the alien dictionary, sorted lexicographically by the rules of
+    this new language. Derive the order of letters in this language.
+    If the order is invalid, return an empty string.
+
+    **Example 1:**
+
+    ```
+    Input: words = ["wrt","wrf","er","ett","rftt"]
+    Output: "wertf"
+    ```
+
+    **Example 2:**
+
+    ```
+    Input: words = ["z","x","z"]
+    Output: ""
+    ```
+
+    **Constraints:**
+
+    - `1 <= words.length <= 100`
+    - `1 <= words[i].length <= 100`
+    - `words[i]` consists of only lowercase English letters
+  solution: |
+    func alienOrder(words []string) string {
+        adj := map[byte][]byte{}
+        in := map[byte]int{}
+        for _, w := range words {
+            for i := 0; i < len(w); i++ {
+                adj[w[i]] = adj[w[i]]
+                in[w[i]] = in[w[i]]
+            }
+        }
+        for i := 0; i < len(words)-1; i++ {
+            a, b := words[i], words[i+1]
+            minLen := len(a)
+            if len(b) < minLen {
+                minLen = len(b)
+            }
+            if len(a) > len(b) && a[:minLen] == b[:minLen] {
+                return ""
+            }
+            for j := 0; j < minLen; j++ {
+                if a[j] != b[j] {
+                    adj[a[j]] = append(adj[a[j]], b[j])
+                    in[b[j]]++
+                    break
+                }
+            }
+        }
+        q := make([]byte, 0)
+        for c := range adj {
+            if in[c] == 0 {
+                q = append(q, c)
+            }
+        }
+        var order []byte
+        for len(q) > 0 {
+            c := q[0]
+            q = q[1:]
+            order = append(order, c)
+            for _, n := range adj[c] {
+                in[n]--
+                if in[n] == 0 {
+                    q = append(q, n)
+                }
+            }
+        }
+        if len(order) != len(adj) {
+            return ""
+        }
+        return string(order)
+    }
+- short_name: binary-tree-maximum-path-sum
+  title: Binary Tree Maximum Path Sum
+  difficulty: hard
+  category: trees
+  frequency: common
+  kind: max-path-tree
+  url: https://leetcode.com/problems/binary-tree-maximum-path-sum/
+  question_text: |
+    A path in a binary tree is a sequence of nodes where each pair of
+    adjacent nodes in the sequence has an edge connecting them. A node
+    can only appear in the sequence at most once. The path sum is the
+    sum of the node values in the path. Given the root of a binary tree,
+    return the maximum path sum of any non-empty path.
+
+    **Example 1:**
+
+    ```
+    Input: root = [1,2,3]
+    Output: 6
+    Explanation: 2 → 1 → 3
+    ```
+
+    **Example 2:**
+
+    ```
+    Input: root = [-10,9,20,null,null,15,7]
+    Output: 42
+    Explanation: 15 → 20 → 7
+    ```
+
+    **Constraints:**
+
+    - The number of nodes in the tree is in the range `[1, 3 * 10^4]`.
+    - `-1000 <= Node.val <= 1000`
+  solution: |
+    func maxPathSum(root *TreeNode) int {
+        maxSum := root.Val
+        var dfs func(*TreeNode) int
+        dfs = func(n *TreeNode) int {
+            if n == nil {
+                return 0
+            }
+            left := max(dfs(n.Left), 0)
+            right := max(dfs(n.Right), 0)
+            cur := n.Val + left + right
+            if cur > maxSum {
+                maxSum = cur
+            }
+            return n.Val + max(left, right)
+        }
+        dfs(root)
+        return maxSum
+    }
+
+    func max(a, b int) int {
+        if a > b {
+            return a
+        }
+        return b
+    }
+- short_name: burst-balloons
+  title: Burst Balloons
+  difficulty: hard
+  category: dynamic-programming
+  frequency: uncommon
+  signature: maxCoins(nums []int) int
+  url: https://leetcode.com/problems/burst-balloons/
+  question_text: |
+    You are given `n` balloons, indexed from `0` to `n - 1`. Each balloon is
+    painted with a number on it represented by an array `nums`. You are
+    asked to burst all the balloons. If you burst the i-th balloon, you
+    get `nums[i - 1] * nums[i] * nums[i + 1]` coins. After bursting `i`,
+    `i - 1` and `i + 1` become adjacent. Return the maximum coins you can
+    collect by bursting the balloons wisely.
+
+    You may imagine `nums[-1] = nums[n] = 1`. They are not real, you
+    cannot burst them.
+
+    **Example 1:**
+
+    ```
+    Input: nums = [3,1,5,8]
+    Output: 167
+    Explanation:
+    nums = [3,1,5,8] → [3,5,8] → [3,8] → [8] → []
+    coins = 3*1*5 + 3*5*8 + 1*3*8 + 1*8*1 = 167
+    ```
+
+    **Example 2:**
+
+    ```
+    Input: nums = [1,5]
+    Output: 10
+    ```
+
+    **Constraints:**
+
+    - `n == nums.length`
+    - `1 <= n <= 300`
+    - `0 <= nums[i] <= 100`
+  solution: |
+    func maxCoins(nums []int) int {
+        n := len(nums)
+        vals := make([]int, n+2)
+        vals[0], vals[n+1] = 1, 1
+        for i := 1; i <= n; i++ {
+            vals[i] = nums[i-1]
+        }
+        dp := make([][]int, n+2)
+        for i := range dp {
+            dp[i] = make([]int, n+2)
+        }
+        for length := 1; length <= n; length++ {
+            for l := 1; l <= n-length+1; l++ {
+                r := l + length - 1
+                for k := l; k <= r; k++ {
+                    coins := vals[l-1] * vals[k] * vals[r+1]
+                    coins += dp[l][k-1] + dp[k+1][r]
+                    if coins > dp[l][r] {
+                        dp[l][r] = coins
+                    }
+                }
+            }
+        }
+        return dp[1][n]
+    }
+- short_name: longest-increasing-path-matrix
+  title: Longest Increasing Path in a Matrix
+  difficulty: hard
+  category: matrix
+  frequency: uncommon
+  signature: longestIncreasingPath(matrix [][]int) int
+  url: https://leetcode.com/problems/longest-increasing-path-in-a-matrix/
+  question_text: |
+    Given an `m x n` integers matrix, return the length of the longest
+    increasing path in the matrix. From each cell, you can move in four
+    directions: left, right, up, or down. You may not move diagonally
+    or outside the boundary.
+
+    **Example 1:**
+
+    ```
+    Input: matrix = [[9,9,4],[6,6,8],[2,1,1]]
+    Output: 4
+    Explanation: 1 → 2 → 6 → 9 (or 1 → 2 → 6 → 9)
+    ```
+
+    **Example 2:**
+
+    ```
+    Input: matrix = [[3,4,5],[3,2,6],[2,2,1]]
+    Output: 4
+    Explanation: 3 → 4 → 5 → 6
+    ```
+
+    **Constraints:**
+
+    - `m == matrix.length`
+    - `n == matrix[i].length`
+    - `1 <= m, n <= 200`
+    - `0 <= matrix[i][j] <= 2³¹ - 1`
+  solution: |
+    func longestIncreasingPath(matrix [][]int) int {
+        if len(matrix) == 0 {
+            return 0
+        }
+        m, n := len(matrix), len(matrix[0])
+        memo := make([][]int, m)
+        for i := range memo {
+            memo[i] = make([]int, n)
+        }
+        dirs := [][2]int{{1, 0}, {-1, 0}, {0, 1}, {0, -1}}
+        var dfs func(int, int) int
+        dfs = func(r, c int) int {
+            if memo[r][c] > 0 {
+                return memo[r][c]
+            }
+            best := 1
+            for _, d := range dirs {
+                nr, nc := r+d[0], c+d[1]
+                if nr >= 0 && nr < m && nc >= 0 && nc < n && matrix[nr][nc] > matrix[r][c] {
+                    cand := 1 + dfs(nr, nc)
+                    if cand > best {
+                        best = cand
+                    }
+                }
+            }
+            memo[r][c] = best
+            return best
+        }
+        ans := 0
+        for i := 0; i < m; i++ {
+            for j := 0; j < n; j++ {
+                cand := dfs(i, j)
+                if cand > ans {
+                    ans = cand
+                }
+            }
+        }
+        return ans
+    }
 - short_name: lru-cache
   title: LRU Cache
   difficulty: hard
   category: design
+  frequency: common
+  kind: lru-cache
+  url: https://leetcode.com/problems/lru-cache/
   question_text: |
     Design a data structure that follows the constraints of a **Least Recently Used (LRU) cache**.
 
@@ -167,11 +589,54 @@
     - `0 <= key <= 10^4`
     - `0 <= value <= 10^5`
     - At most `2 * 10^5` calls will be made to `get` and `put`.
+  solution: |
+    type LRUCache struct {
+        cap  int
+        m    map[int]*list.Element
+        list *list.List
+    }
 
+    type entry struct {
+        key   int
+        value int
+    }
+
+    func Constructor(capacity int) LRUCache {
+        return LRUCache{
+            cap:  capacity,
+            m:    make(map[int]*list.Element),
+            list: list.New(),
+        }
+    }
+
+    func (c *LRUCache) Get(key int) int {
+        if el, ok := c.m[key]; ok {
+            c.list.MoveToFront(el)
+            return el.Value.(entry).value
+        }
+        return -1
+    }
+
+    func (c *LRUCache) Put(key int, value int) {
+        if el, ok := c.m[key]; ok {
+            el.Value = entry{key, value}
+            c.list.MoveToFront(el)
+            return
+        }
+        if c.list.Len() == c.cap {
+            back := c.list.Back()
+            delete(c.m, back.Value.(entry).key)
+            c.list.Remove(back)
+        }
+        c.m[key] = c.list.PushFront(entry{key, value})
+    }
 - short_name: serialize-deserialize-binary-tree
   title: Serialize and Deserialize Binary Tree
-  difficulty: expert
+  difficulty: hard
   category: trees
+  frequency: common
+  kind: codec-tree
+  url: https://leetcode.com/problems/serialize-and-deserialize-binary-tree/
   question_text: |
     Serialization is the process of converting a data structure or object into a sequence of bits so that it can be stored in a file or memory buffer, or transmitted across a network connection link to be reconstructed later in the same or another computer environment.
 
@@ -197,3 +662,1730 @@
 
     - The number of nodes in the tree is in the range `[0, 10^4]`.
     - `-1000 <= Node.val <= 1000`
+  solution: |
+    type Codec struct{}
+
+    func Constructor() Codec {
+        return Codec{}
+    }
+
+    func (c *Codec) serialize(root *TreeNode) string {
+        var b strings.Builder
+        var preorder func(*TreeNode)
+        preorder = func(n *TreeNode) {
+            if n == nil {
+                b.WriteString("null,")
+                return
+            }
+            b.WriteString(fmt.Sprintf("%d,", n.Val))
+            preorder(n.Left)
+            preorder(n.Right)
+        }
+        preorder(root)
+        return b.String()
+    }
+
+    func (c *Codec) deserialize(data string) *TreeNode {
+        nodes := strings.Split(data, ",")
+        i := 0
+        var build func() *TreeNode
+        build = func() *TreeNode {
+            if nodes[i] == "null" {
+                i++
+                return nil
+            }
+            val, _ := strconv.Atoi(nodes[i])
+            i++
+            n := &TreeNode{Val: val}
+            n.Left = build()
+            n.Right = build()
+            return n
+        }
+        return build()
+    }
+- short_name: evaluate-reverse-polish-notation
+  title: Evaluate Reverse Polish Notation
+  difficulty: medium
+  category: stack
+  frequency: uncommon
+  signature: evalRPN(tokens []string) int
+  url: https://leetcode.com/problems/evaluate-reverse-polish-notation/
+  question_text: |
+    Evaluate the value of an arithmetic expression in Reverse Polish
+    Notation. Valid operators are `+`, `-`, `*`, and `/`. Each operand may
+    be an integer or another expression. Division between two integers
+    always truncates toward zero.
+
+    **Example 1:**
+
+    ```
+    Input: tokens = ["2","1","+","3","*"]
+    Output: 9
+    Explanation: ((2 + 1) * 3) = 9
+    ```
+
+    **Example 2:**
+
+    ```
+    Input: tokens = ["4","13","5","/","+"]
+    Output: 6
+    Explanation: (4 + (13 / 5)) = 6
+    ```
+
+    **Constraints:**
+
+    - `1 <= tokens.length <= 10^4`
+    - `tokens[i]` is an operator (`+`, `-`, `*`, `/`) or an integer in range `[-200, 200]`
+  solution: |
+    func evalRPN(tokens []string) int {
+        stack := make([]int, 0, len(tokens))
+        for _, t := range tokens {
+            switch t {
+            case "+":
+                stack[len(stack)-2] += stack[len(stack)-1]
+                stack = stack[:len(stack)-1]
+            case "-":
+                stack[len(stack)-2] -= stack[len(stack)-1]
+                stack = stack[:len(stack)-1]
+            case "*":
+                stack[len(stack)-2] *= stack[len(stack)-1]
+                stack = stack[:len(stack)-1]
+            case "/":
+                stack[len(stack)-2] /= stack[len(stack)-1]
+                stack = stack[:len(stack)-1]
+            default:
+                v, _ := strconv.Atoi(t)
+                stack = append(stack, v)
+            }
+        }
+        return stack[0]
+    }
+- short_name: find-duplicate-number
+  title: Find the Duplicate Number
+  difficulty: medium
+  category: arrays
+  frequency: common
+  signature: findDuplicate(nums []int) int
+  url: https://leetcode.com/problems/find-the-duplicate-number/
+  question_text: |
+    Given an array of integers `nums` containing `n + 1` integers where each
+    integer is in the range `[1, n]` inclusive. There is only one repeated
+    number in `nums`, return this repeated number. You must solve the
+    problem without modifying the array and using O(1) extra space.
+
+    **Example 1:**
+
+    ```
+    Input: nums = [1,3,4,2,2]
+    Output: 2
+    ```
+
+    **Example 2:**
+
+    ```
+    Input: nums = [3,1,3,4,2]
+    Output: 3
+    ```
+
+    **Constraints:**
+
+    - `1 <= n <= 10^5`
+    - `nums.length == n + 1`
+    - `1 <= nums[i] <= n`
+    - There is only one repeated number
+  solution: |
+    func findDuplicate(nums []int) int {
+        slow, fast := nums[0], nums[nums[0]]
+        for slow != fast {
+            slow = nums[slow]
+            fast = nums[nums[fast]]
+        }
+        slow = 0
+        for slow != fast {
+            slow = nums[slow]
+            fast = nums[fast]
+        }
+        return slow
+    }
+- short_name: minimum-path-sum
+  title: Minimum Path Sum
+  difficulty: medium
+  category: dynamic-programming
+  frequency: uncommon
+  signature: minPathSum(grid [][]int) int
+  url: https://leetcode.com/problems/minimum-path-sum/
+  question_text: |
+    Given a `m x n` grid filled with non-negative numbers, find a path from
+    top-left to bottom-right which minimises the sum of all numbers along
+    the path. You can only move down or right at any point in time.
+
+    **Example 1:**
+
+    ```
+    Input: grid = [[1,3,1],[1,5,1],[4,2,1]]
+    Output: 7
+    Explanation: 1 → 3 → 1 → 1 → 1
+    ```
+
+    **Example 2:**
+
+    ```
+    Input: grid = [[1,2,3],[4,5,6]]
+    Output: 12
+    ```
+
+    **Constraints:**
+
+    - `m == grid.length`
+    - `n == grid[i].length`
+    - `1 <= m, n <= 200`
+    - `0 <= grid[i][j] <= 200`
+  solution: |
+    func minPathSum(grid [][]int) int {
+        m, n := len(grid), len(grid[0])
+        dp := make([][]int, m)
+        for i := range dp {
+            dp[i] = make([]int, n)
+            for j := range dp[i] {
+                if i == 0 && j == 0 {
+                    dp[i][j] = grid[i][j]
+                } else if i == 0 {
+                    dp[i][j] = dp[i][j-1] + grid[i][j]
+                } else if j == 0 {
+                    dp[i][j] = dp[i-1][j] + grid[i][j]
+                } else {
+                    left, up := dp[i][j-1], dp[i-1][j]
+                    if left < up {
+                        dp[i][j] = left + grid[i][j]
+                    } else {
+                        dp[i][j] = up + grid[i][j]
+                    }
+                }
+            }
+        }
+        return dp[m-1][n-1]
+    }
+- short_name: product-array-except-self
+  title: Product of Array Except Self
+  difficulty: medium
+  category: arrays
+  frequency: common
+  signature: productExceptSelf(nums []int) []int
+  url: https://leetcode.com/problems/product-of-array-except-self/
+  question_text: |
+    Given an integer array `nums`, return an array `answer` such that `answer[i]` is equal to the product of all the elements of `nums` except `nums[i]`.
+
+    The product of any prefix or suffix of `nums` is guaranteed to fit in a 32-bit integer.
+
+    You must write an algorithm that runs in O(n) time and without using the division operation.
+
+    **Example 1:**
+
+    ```
+    Input: nums = [1,2,3,4]
+    Output: [24,12,8,6]
+    ```
+
+    **Example 2:**
+
+    ```
+    Input: nums = [-1,1,0,-3,3]
+    Output: [0,0,9,0,0]
+    ```
+
+    **Constraints:**
+
+    - `2 <= nums.length <= 10^5`
+    - `-30 <= nums[i] <= 30`
+  solution: |
+    func productExceptSelf(nums []int) []int {
+        n := len(nums)
+        ans := make([]int, n)
+        for i := range ans {
+            ans[i] = 1
+        }
+        prefix := 1
+        for i := 0; i < n; i++ {
+            ans[i] = prefix
+            prefix *= nums[i]
+        }
+        suffix := 1
+        for i := n - 1; i >= 0; i-- {
+            ans[i] *= suffix
+            suffix *= nums[i]
+        }
+        return ans
+    }
+- short_name: valid-parentheses
+  title: Valid Parentheses
+  difficulty: easy
+  category: stack
+  frequency: common
+  signature: isValid(s string) bool
+  url: https://leetcode.com/problems/valid-parentheses/
+  question_text: |
+    Given a string `s` containing just the characters `'('`, `')'`, `'{'`, `'}'`, `'['` and `']'`, determine if the input string is valid.
+
+    An input string is valid if:
+
+    1. Open brackets must be closed by the same type of brackets.
+    2. Open brackets must be closed in the correct order.
+    3. Every close bracket has a corresponding open bracket of the same type.
+
+    **Example 1:**
+
+    ```
+    Input: s = "()"
+    Output: true
+    ```
+
+    **Example 2:**
+
+    ```
+    Input: s = "()[]{}"
+    Output: true
+    ```
+
+    **Example 3:**
+
+    ```
+    Input: s = "(]"
+    Output: false
+    ```
+
+    **Constraints:**
+
+    - `1 <= s.length <= 10^4`
+    - `s` consists of parentheses only `'()[]{}'`.
+  solution: |
+    func isValid(s string) bool {
+        stack := make([]byte, 0, len(s))
+        for i := 0; i < len(s); i++ {
+            switch s[i] {
+            case '(', '{', '[':
+                stack = append(stack, s[i])
+            case ')':
+                if len(stack) == 0 || stack[len(stack)-1] != '(' {
+                    return false
+                }
+                stack = stack[:len(stack)-1]
+            case '}':
+                if len(stack) == 0 || stack[len(stack)-1] != '{' {
+                    return false
+                }
+                stack = stack[:len(stack)-1]
+            case ']':
+                if len(stack) == 0 || stack[len(stack)-1] != '[' {
+                    return false
+                }
+                stack = stack[:len(stack)-1]
+            }
+        }
+        return len(stack) == 0
+    }
+- short_name: merge-two-sorted-lists
+  title: Merge Two Sorted Lists
+  difficulty: easy
+  category: linked-list
+  frequency: common
+  kind: list
+  signature: mergeTwoLists(list1 *ListNode, list2 *ListNode) *ListNode
+  url: https://leetcode.com/problems/merge-two-sorted-lists/
+  question_text: |
+    You are given the heads of two sorted linked lists `list1` and `list2`.
+
+    Merge the two lists into one sorted list. The list should be made by splicing together the nodes of the first two lists.
+
+    Return the head of the merged linked list.
+
+    **Example 1:**
+
+    ```
+    Input: list1 = [1,2,4], list2 = [1,3,4]
+    Output: [1,1,2,3,4,4]
+    ```
+
+    **Example 2:**
+
+    ```
+    Input: list1 = [], list2 = []
+    Output: []
+    ```
+
+    **Constraints:**
+
+    - The number of nodes in both lists is in the range `[0, 50]`.
+    - `-100 <= Node.val <= 100`
+    - Both `list1` and `list2` are sorted in non-decreasing order.
+  solution: |
+    func mergeTwoLists(list1 *ListNode, list2 *ListNode) *ListNode {
+        dummy := &ListNode{}
+        cur := dummy
+        for list1 != nil && list2 != nil {
+            if list1.Val < list2.Val {
+                cur.Next = list1
+                list1 = list1.Next
+            } else {
+                cur.Next = list2
+                list2 = list2.Next
+            }
+            cur = cur.Next
+        }
+        if list1 != nil {
+            cur.Next = list1
+        } else {
+            cur.Next = list2
+        }
+        return dummy.Next
+    }
+- short_name: best-time-to-buy-and-sell-stock
+  title: Best Time to Buy and Sell Stock
+  difficulty: easy
+  category: arrays
+  frequency: common
+  signature: maxProfit(prices []int) int
+  url: https://leetcode.com/problems/best-time-to-buy-and-sell-stock/
+  question_text: |
+    You are given an array `prices` where `prices[i]` is the price of a given stock on the `i-th` day.
+
+    You want to maximize your profit by choosing a single day to buy one stock and choosing a different day in the future to sell that stock.
+
+    Return the maximum profit you can achieve from this transaction. If you cannot achieve any profit, return `0`.
+
+    **Example 1:**
+
+    ```
+    Input: prices = [7,1,5,3,6,4]
+    Output: 5
+    Explanation: Buy on day 2 (price = 1) and sell on day 5 (price = 6), profit = 6-1 = 5.
+    ```
+
+    **Example 2:**
+
+    ```
+    Input: prices = [7,6,4,3,1]
+    Output: 0
+    ```
+
+    **Constraints:**
+
+    - `1 <= prices.length <= 10^5`
+    - `0 <= prices[i] <= 10^4`
+  solution: |
+    func maxProfit(prices []int) int {
+        minPrice := prices[0]
+        maxProfit := 0
+        for _, p := range prices {
+            if p < minPrice {
+                minPrice = p
+            } else if p-minPrice > maxProfit {
+                maxProfit = p - minPrice
+            }
+        }
+        return maxProfit
+    }
+- short_name: climbing-stairs
+  title: Climbing Stairs
+  difficulty: easy
+  category: dynamic-programming
+  frequency: common
+  signature: climbStairs(n int) int
+  url: https://leetcode.com/problems/climbing-stairs/
+  question_text: |
+    You are climbing a staircase. It takes `n` steps to reach the top.
+
+    Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?
+
+    **Example 1:**
+
+    ```
+    Input: n = 2
+    Output: 2
+    Explanation: There are two ways to climb to the top.
+    1. 1 step + 1 step
+    2. 2 steps
+    ```
+
+    **Example 2:**
+
+    ```
+    Input: n = 3
+    Output: 3
+    ```
+
+    **Constraints:**
+
+    - `1 <= n <= 45`
+  solution: |
+    func climbStairs(n int) int {
+        a, b := 1, 1
+        for i := 2; i <= n; i++ {
+            a, b = b, a+b
+        }
+        return b
+    }
+- short_name: maximum-subarray
+  title: Maximum Subarray
+  difficulty: easy
+  category: arrays
+  frequency: common
+  signature: maxSubArray(nums []int) int
+  url: https://leetcode.com/problems/maximum-subarray/
+  question_text: |
+    Given an integer array `nums`, find the subarray with the largest sum, and return its sum.
+
+    **Example 1:**
+
+    ```
+    Input: nums = [-2,1,-3,4,-1,2,1,-5,4]
+    Output: 6
+    Explanation: The subarray [4,-1,2,1] has the largest sum 6.
+    ```
+
+    **Example 2:**
+
+    ```
+    Input: nums = [1]
+    Output: 1
+    ```
+
+    **Constraints:**
+
+    - `1 <= nums.length <= 10^5`
+    - `-10^4 <= nums[i] <= 10^4`
+  solution: |
+    func maxSubArray(nums []int) int {
+        maxEndingHere := nums[0]
+        maxSoFar := nums[0]
+        for i := 1; i < len(nums); i++ {
+            if maxEndingHere+nums[i] > nums[i] {
+                maxEndingHere = maxEndingHere + nums[i]
+            } else {
+                maxEndingHere = nums[i]
+            }
+            if maxEndingHere > maxSoFar {
+                maxSoFar = maxEndingHere
+            }
+        }
+        return maxSoFar
+    }
+- short_name: invert-binary-tree
+  title: Invert Binary Tree
+  difficulty: easy
+  category: trees
+  frequency: common
+  kind: tree
+  signature: invertTree(root *TreeNode) *TreeNode
+  url: https://leetcode.com/problems/invert-binary-tree/
+  question_text: |
+    Given the `root` of a binary tree, invert the tree, and return its root.
+
+    **Example 1:**
+
+    ```
+    Input: root = [4,2,7,1,3,6,9]
+    Output: [4,7,2,9,6,3,1]
+    ```
+
+    **Constraints:**
+
+    - The number of nodes in the tree is in the range `[0, 100]`.
+    - `-100 <= Node.val <= 100`
+  solution: |
+    func invertTree(root *TreeNode) *TreeNode {
+        if root == nil {
+            return nil
+        }
+        root.Left, root.Right = root.Right, root.Left
+        invertTree(root.Left)
+        invertTree(root.Right)
+        return root
+    }
+- short_name: group-anagrams
+  title: Group Anagrams
+  difficulty: medium
+  category: strings
+  frequency: common
+  signature: groupAnagrams(strs []string) [][]string
+  url: https://leetcode.com/problems/group-anagrams/
+  question_text: |
+    Given an array of strings `strs`, group the anagrams together. You can return the answer in any order.
+
+    **Example 1:**
+
+    ```
+    Input: strs = ["eat","tea","tan","ate","nat","bat"]
+    Output: [["bat"],["nat","tan"],["ate","eat","tea"]]
+    ```
+
+    **Example 2:**
+
+    ```
+    Input: strs = [""]
+    Output: [[""]]
+    ```
+
+    **Constraints:**
+
+    - `1 <= strs.length <= 10^4`
+    - `0 <= strs[i].length <= 100`
+    - `strs[i]` consists of lowercase English letters.
+  solution: |
+    func groupAnagrams(strs []string) [][]string {
+        m := make(map[string][]string)
+        for _, s := range strs {
+            b := []byte(s)
+            sort.Slice(b, func(i, j int) bool { return b[i] < b[j] })
+            key := string(b)
+            m[key] = append(m[key], s)
+        }
+        res := make([][]string, 0, len(m))
+        for _, v := range m {
+            res = append(res, v)
+        }
+        return res
+    }
+- short_name: validate-binary-search-tree
+  title: Validate Binary Search Tree
+  difficulty: medium
+  category: trees
+  frequency: common
+  kind: tree
+  signature: isValidBST(root *TreeNode) bool
+  url: https://leetcode.com/problems/validate-binary-search-tree/
+  question_text: |
+    Given the root of a binary tree, determine if it is a valid binary search tree (BST).
+
+    A valid BST is defined as follows:
+
+    - The left subtree of a node contains only nodes with keys less than the node's key.
+    - The right subtree of a node contains only nodes with keys greater than the node's key.
+    - Both the left and right subtrees must also be binary search trees.
+
+    **Example 1:**
+
+    ```
+    Input: root = [2,1,3]
+    Output: true
+    ```
+
+    **Example 2:**
+
+    ```
+    Input: root = [5,1,4,null,null,3,6]
+    Output: false
+    Explanation: The root node's value is 5 but its right child's value is 4.
+    ```
+
+    **Constraints:**
+
+    - The number of nodes in the tree is in the range `[1, 10^4]`.
+    - `-2^31 <= Node.val <= 2^31 - 1`
+  solution: |
+    func isValidBST(root *TreeNode) bool {
+        var prev *int
+        var inorder func(*TreeNode) bool
+        inorder = func(n *TreeNode) bool {
+            if n == nil {
+                return true
+            }
+            if !inorder(n.Left) {
+                return false
+            }
+            if prev != nil && n.Val <= *prev {
+                return false
+            }
+            prev = &n.Val
+            return inorder(n.Right)
+        }
+        return inorder(root)
+    }
+- short_name: binary-tree-level-order-traversal
+  title: Binary Tree Level Order Traversal
+  difficulty: medium
+  category: trees
+  frequency: common
+  kind: tree
+  signature: levelOrder(root *TreeNode) [][]int
+  url: https://leetcode.com/problems/binary-tree-level-order-traversal/
+  question_text: |
+    Given the root of a binary tree, return the level order traversal of its nodes' values. (i.e., from left to right, level by level).
+
+    **Example 1:**
+
+    ```
+    Input: root = [3,9,20,null,null,15,7]
+    Output: [[3],[9,20],[15,7]]
+    ```
+
+    **Example 2:**
+
+    ```
+    Input: root = [1]
+    Output: [[1]]
+    ```
+
+    **Example 3:**
+
+    ```
+    Input: root = []
+    Output: []
+    ```
+
+    **Constraints:**
+
+    - The number of nodes in the tree is in the range `[0, 2000]`.
+    - `-1000 <= Node.val <= 1000`
+  solution: |
+    func levelOrder(root *TreeNode) [][]int {
+        if root == nil {
+            return nil
+        }
+        var res [][]int
+        q := []*TreeNode{root}
+        for len(q) > 0 {
+            n := len(q)
+            level := make([]int, n)
+            for i := 0; i < n; i++ {
+                node := q[0]
+                q = q[1:]
+                level[i] = node.Val
+                if node.Left != nil {
+                    q = append(q, node.Left)
+                }
+                if node.Right != nil {
+                    q = append(q, node.Right)
+                }
+            }
+            res = append(res, level)
+        }
+        return res
+    }
+- short_name: container-with-most-water
+  title: Container With Most Water
+  difficulty: medium
+  category: arrays
+  frequency: common
+  signature: maxArea(height []int) int
+  url: https://leetcode.com/problems/container-with-most-water/
+  question_text: |
+    You are given an integer array `height` of length `n`. There are `n` vertical lines drawn such that the two endpoints of the i-th line are `(i, 0)` and `(i, height[i])`.
+
+    Find two lines that together with the x-axis form a container, such that the container contains the most water.
+
+    Return the maximum amount of water a container can store.
+
+    **Example 1:**
+
+    ```
+    Input: height = [1,8,6,2,5,4,8,3,7]
+    Output: 49
+    ```
+
+    **Example 2:**
+
+    ```
+    Input: height = [1,1]
+    Output: 1
+    ```
+
+    **Constraints:**
+
+    - `n == height.length`
+    - `2 <= n <= 10^5`
+    - `0 <= height[i] <= 10^4`
+  solution: |
+    func maxArea(height []int) int {
+        l, r := 0, len(height)-1
+        max := 0
+        for l < r {
+            h := height[l]
+            if height[r] < h {
+                h = height[r]
+            }
+            area := h * (r - l)
+            if area > max {
+                max = area
+            }
+            if height[l] < height[r] {
+                l++
+            } else {
+                r--
+            }
+        }
+        return max
+    }
+- short_name: longest-substring-without-repeating-characters
+  title: Longest Substring Without Repeating Characters
+  difficulty: medium
+  category: strings
+  frequency: common
+  signature: lengthOfLongestSubstring(s string) int
+  url: https://leetcode.com/problems/longest-substring-without-repeating-characters/
+  question_text: |
+    Given a string `s`, find the length of the longest substring without repeating characters.
+
+    **Example 1:**
+
+    ```
+    Input: s = "abcabcbb"
+    Output: 3
+    Explanation: The answer is "abc", with the length of 3.
+    ```
+
+    **Example 2:**
+
+    ```
+    Input: s = "bbbbb"
+    Output: 1
+    Explanation: The answer is "b", with the length of 1.
+    ```
+
+    **Example 3:**
+
+    ```
+    Input: s = "pwwkew"
+    Output: 3
+    Explanation: The answer is "wke", with the length of 3.
+    ```
+
+    **Constraints:**
+
+    - `0 <= s.length <= 5 * 10^4`
+    - `s` consists of English letters, digits, symbols and spaces.
+  solution: |
+    func lengthOfLongestSubstring(s string) int {
+        last := make(map[byte]int)
+        start, maxLen := 0, 0
+        for i := 0; i < len(s); i++ {
+            if idx, ok := last[s[i]]; ok && idx >= start {
+                start = idx + 1
+            }
+            if i-start+1 > maxLen {
+                maxLen = i - start + 1
+            }
+            last[s[i]] = i
+        }
+        return maxLen
+    }
+- short_name: house-robber
+  title: House Robber
+  difficulty: medium
+  category: dynamic-programming
+  frequency: common
+  signature: rob(nums []int) int
+  url: https://leetcode.com/problems/house-robber/
+  question_text: |
+    You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed, the only constraint stopping you from robbing each of them is that adjacent houses have security systems connected and it will automatically contact the police if two adjacent houses were broken into on the same night.
+
+    Given an integer array `nums` representing the amount of money of each house, return the maximum amount of money you can rob tonight without alerting the police.
+
+    **Example 1:**
+
+    ```
+    Input: nums = [1,2,3,1]
+    Output: 4
+    Explanation: Rob house 1 (money = 1) and then rob house 3 (money = 3). Total = 1 + 3 = 4.
+    ```
+
+    **Example 2:**
+
+    ```
+    Input: nums = [2,7,9,3,1]
+    Output: 12
+    Explanation: Rob house 1 (money = 2), rob house 3 (money = 9), rob house 5 (money = 1). Total = 2 + 9 + 1 = 12.
+    ```
+
+    **Constraints:**
+
+    - `1 <= nums.length <= 100`
+    - `0 <= nums[i] <= 400`
+  solution: |
+    func rob(nums []int) int {
+        if len(nums) == 0 {
+            return 0
+        }
+        if len(nums) == 1 {
+            return nums[0]
+        }
+        prev2, prev1 := nums[0], max(nums[0], nums[1])
+        for i := 2; i < len(nums); i++ {
+            cur := max(prev1, prev2+nums[i])
+            prev2, prev1 = prev1, cur
+        }
+        return prev1
+    }
+
+    func max(a, b int) int {
+        if a > b {
+            return a
+        }
+        return b
+    }
+- short_name: merge-k-sorted-lists
+  title: Merge k Sorted Lists
+  difficulty: hard
+  category: linked-list
+  frequency: common
+  kind: list
+  signature: mergeKLists(lists []*ListNode) *ListNode
+  url: https://leetcode.com/problems/merge-k-sorted-lists/
+  question_text: |
+    You are given an array of `k` linked-lists `lists`, each linked-list is sorted in ascending order.
+
+    Merge all the linked-lists into one sorted linked-list and return it.
+
+    **Example 1:**
+
+    ```
+    Input: lists = [[1,4,5],[1,3,4],[2,6]]
+    Output: [1,1,2,3,4,4,5,6]
+    ```
+
+    **Example 2:**
+
+    ```
+    Input: lists = []
+    Output: []
+    ```
+
+    **Constraints:**
+
+    - `k == lists.length`
+    - `0 <= k <= 10^4`
+    - `0 <= lists[i].length <= 500`
+    - `-10^4 <= lists[i][j] <= 10^4`
+    - The sum of `lists[i].length` will not exceed `10^4`.
+  solution: |
+    import "container/heap"
+
+    type minHeap []*ListNode
+
+    func (h minHeap) Len() int            { return len(h) }
+    func (h minHeap) Less(i, j int) bool  { return h[i].Val < h[j].Val }
+    func (h minHeap) Swap(i, j int)       { h[i], h[j] = h[j], h[i] }
+    func (h *minHeap) Push(x interface{}) { *h = append(*h, x.(*ListNode)) }
+    func (h *minHeap) Pop() interface{} {
+        old := *h
+        n := len(old)
+        x := old[n-1]
+        *h = old[:n-1]
+        return x
+    }
+
+    func mergeKLists(lists []*ListNode) *ListNode {
+        h := &minHeap{}
+        heap.Init(h)
+        for _, l := range lists {
+            if l != nil {
+                heap.Push(h, l)
+            }
+        }
+        dummy := &ListNode{}
+        cur := dummy
+        for h.Len() > 0 {
+            node := heap.Pop(h).(*ListNode)
+            cur.Next = node
+            cur = cur.Next
+            if node.Next != nil {
+                heap.Push(h, node.Next)
+            }
+        }
+        return dummy.Next
+    }
+- short_name: word-ladder
+  title: Word Ladder
+  difficulty: hard
+  category: graph
+  frequency: common
+  signature: ladderLength(beginWord string, endWord string, wordList []string) int
+  url: https://leetcode.com/problems/word-ladder/
+  question_text: |
+    A transformation sequence from word `beginWord` to word `endWord` using a dictionary `wordList` is a sequence of words `beginWord = s0, s1, ..., sk = endWord` such that:
+
+    - Each adjacent pair of words differs by a single letter.
+    - Every `si` for `1 <= i <= k` is in `wordList`.
+    - `beginWord` does not need to be in `wordList`.
+
+    Return the number of words in the shortest transformation sequence, or `0` if no such sequence exists.
+
+    **Example 1:**
+
+    ```
+    Input: beginWord = "hit", endWord = "cog", wordList = ["hot","dot","dog","lot","log","cog"]
+    Output: 5
+    ```
+
+    **Example 2:**
+
+    ```
+    Input: beginWord = "hit", endWord = "cog", wordList = ["hot","dot","dog","lot","log"]
+    Output: 0
+    ```
+
+    **Constraints:**
+
+    - `1 <= beginWord.length <= 10`
+    - `endWord.length == beginWord.length`
+    - `1 <= wordList.length <= 5000`
+    - All words consist of lowercase English letters.
+  solution: |
+    func ladderLength(beginWord string, endWord string, wordList []string) int {
+        wordSet := make(map[string]bool, len(wordList))
+        for _, w := range wordList {
+            wordSet[w] = true
+        }
+        if !wordSet[endWord] {
+            return 0
+        }
+        queue := []string{beginWord}
+        dist := 1
+        for len(queue) > 0 {
+            for sz := len(queue); sz > 0; sz-- {
+                word := queue[0]
+                queue = queue[1:]
+                if word == endWord {
+                    return dist
+                }
+                bytes := []byte(word)
+                for i := range bytes {
+                    orig := bytes[i]
+                    for c := 'a'; c <= 'z'; c++ {
+                        bytes[i] = byte(c)
+                        nxt := string(bytes)
+                        if wordSet[nxt] {
+                            delete(wordSet, nxt)
+                            queue = append(queue, nxt)
+                        }
+                    }
+                    bytes[i] = orig
+                }
+            }
+            dist++
+        }
+        return 0
+    }
+- short_name: median-of-two-sorted-arrays
+  title: Median of Two Sorted Arrays
+  difficulty: hard
+  category: arrays
+  frequency: common
+  signature: findMedianSortedArrays(nums1 []int, nums2 []int) float64
+  url: https://leetcode.com/problems/median-of-two-sorted-arrays/
+  question_text: |
+    Given two sorted arrays `nums1` and `nums2` of size `m` and `n` respectively, return the median of the two sorted arrays.
+
+    The overall run time complexity should be O(log (m+n)).
+
+    **Example 1:**
+
+    ```
+    Input: nums1 = [1,3], nums2 = [2]
+    Output: 2.00000
+    ```
+
+    **Example 2:**
+
+    ```
+    Input: nums1 = [1,2], nums2 = [3,4]
+    Output: 2.50000
+    ```
+
+    **Constraints:**
+
+    - `0 <= m, n <= 1000`
+    - `1 <= m + n <= 2000`
+    - `-10^6 <= nums1[i], nums2[i] <= 10^6`
+  solution: |
+    func findMedianSortedArrays(nums1 []int, nums2 []int) float64 {
+        if len(nums1) > len(nums2) {
+            nums1, nums2 = nums2, nums1
+        }
+        m, n := len(nums1), len(nums2)
+        low, high := 0, m
+        for low <= high {
+            i := (low + high) / 2
+            j := (m+n+1)/2 - i
+            left1 := -1 << 60
+            if i > 0 {
+                left1 = nums1[i-1]
+            }
+            right1 := 1 << 60
+            if i < m {
+                right1 = nums1[i]
+            }
+            left2 := -1 << 60
+            if j > 0 {
+                left2 = nums2[j-1]
+            }
+            right2 := 1 << 60
+            if j < n {
+                right2 = nums2[j]
+            }
+            if left1 <= right2 && left2 <= right1 {
+                if (m+n)%2 == 0 {
+                    maxLeft := left1
+                    if left2 > maxLeft {
+                        maxLeft = left2
+                    }
+                    minRight := right1
+                    if right2 < minRight {
+                        minRight = right2
+                    }
+                    return float64(maxLeft+minRight) / 2.0
+                }
+                if left1 > left2 {
+                    return float64(left1)
+                }
+                return float64(left2)
+            } else if left1 > right2 {
+                high = i - 1
+            } else {
+                low = i + 1
+            }
+        }
+        return 0.0
+    }
+- short_name: trapping-rain-water
+  title: Trapping Rain Water
+  difficulty: hard
+  category: arrays
+  frequency: common
+  signature: trap(height []int) int
+  url: https://leetcode.com/problems/trapping-rain-water/
+  question_text: |
+    Given `n` non-negative integers representing an elevation map where the width of each bar is `1`, compute how much water it can trap after raining.
+
+    **Example 1:**
+
+    ```
+    Input: height = [0,1,0,2,1,0,1,3,2,1,2,1]
+    Output: 6
+    ```
+
+    **Example 2:**
+
+    ```
+    Input: height = [4,2,0,3,2,5]
+    Output: 9
+    ```
+
+    **Constraints:**
+
+    - `n == height.length`
+    - `1 <= n <= 2 * 10^4`
+    - `0 <= height[i] <= 10^5`
+  solution: |
+    func trap(height []int) int {
+        left, right := 0, len(height)-1
+        leftMax, rightMax := 0, 0
+        ans := 0
+        for left < right {
+            if height[left] < height[right] {
+                if height[left] >= leftMax {
+                    leftMax = height[left]
+                } else {
+                    ans += leftMax - height[left]
+                }
+                left++
+            } else {
+                if height[right] >= rightMax {
+                    rightMax = height[right]
+                } else {
+                    ans += rightMax - height[right]
+                }
+                right--
+            }
+        }
+        return ans
+    }
+- short_name: regular-expression-matching
+  title: Regular Expression Matching
+  difficulty: expert
+  category: strings
+  frequency: common
+  signature: isMatch(s string, p string) bool
+  url: https://leetcode.com/problems/regular-expression-matching/
+  question_text: |
+    Implement regular expression matching with support for `'.'` and `'*'`.
+
+    - `'.'` Matches any single character.
+    - `'*'` Matches zero or more of the preceding element.
+
+    The matching should cover the **entire** input string (not partial).
+
+    **Example 1:**
+
+    ```
+    Input: s = "aa", p = "a"
+    Output: false
+    ```
+
+    **Example 2:**
+
+    ```
+    Input: s = "aa", p = "a*"
+    Output: true
+    ```
+
+    **Example 3:**
+
+    ```
+    Input: s = "ab", p = ".*"
+    Output: true
+    ```
+
+    **Example 4:**
+
+    ```
+    Input: s = "aab", p = "c*a*b"
+    Output: true
+    ```
+
+    **Constraints:**
+
+    - `1 <= s.length <= 20`
+    - `1 <= p.length <= 30`
+    - `s` contains only lowercase English letters.
+    - `p` contains only lowercase English letters, `'.'`, and `'*'`.
+  solution: |
+    func isMatch(s string, p string) bool {
+        m, n := len(s), len(p)
+        dp := make([][]bool, m+1)
+        for i := range dp {
+            dp[i] = make([]bool, n+1)
+        }
+        dp[0][0] = true
+        for j := 2; j <= n; j++ {
+            if p[j-1] == '*' {
+                dp[0][j] = dp[0][j-2]
+            }
+        }
+        for i := 1; i <= m; i++ {
+            for j := 1; j <= n; j++ {
+                if p[j-1] == '.' || p[j-1] == s[i-1] {
+                    dp[i][j] = dp[i-1][j-1]
+                } else if p[j-1] == '*' {
+                    dp[i][j] = dp[i][j-2]
+                    if p[j-2] == '.' || p[j-2] == s[i-1] {
+                        dp[i][j] = dp[i][j] || dp[i-1][j]
+                    }
+                }
+            }
+        }
+        return dp[m][n]
+    }
+- short_name: first-missing-positive
+  title: First Missing Positive
+  difficulty: expert
+  category: arrays
+  frequency: common
+  signature: firstMissingPositive(nums []int) int
+  url: https://leetcode.com/problems/first-missing-positive/
+  question_text: |
+    Given an unsorted integer array `nums`, return the smallest missing positive integer.
+
+    You must implement an algorithm that runs in O(n) time and uses O(1) auxiliary space.
+
+    **Example 1:**
+
+    ```
+    Input: nums = [1,2,0]
+    Output: 3
+    ```
+
+    **Example 2:**
+
+    ```
+    Input: nums = [3,4,-1,1]
+    Output: 2
+    ```
+
+    **Example 3:**
+
+    ```
+    Input: nums = [7,8,9,11,12]
+    Output: 1
+    ```
+
+    **Constraints:**
+
+    - `1 <= nums.length <= 10^5`
+    - `-2^31 <= nums[i] <= 2^31 - 1`
+  solution: |
+    func firstMissingPositive(nums []int) int {
+        n := len(nums)
+        for i := 0; i < n; i++ {
+            for nums[i] > 0 && nums[i] <= n && nums[nums[i]-1] != nums[i] {
+                nums[i], nums[nums[i]-1] = nums[nums[i]-1], nums[i]
+            }
+        }
+        for i := 0; i < n; i++ {
+            if nums[i] != i+1 {
+                return i + 1
+            }
+        }
+        return n + 1
+    }
+- short_name: largest-rectangle-in-histogram
+  title: Largest Rectangle in Histogram
+  difficulty: expert
+  category: stack
+  frequency: common
+  signature: largestRectangleArea(heights []int) int
+  url: https://leetcode.com/problems/largest-rectangle-in-histogram/
+  question_text: |
+    Given an array of integers `heights` representing the histogram's bar height where the width of each bar is 1, return the area of the largest rectangle in the histogram.
+
+    **Example 1:**
+
+    ```
+    Input: heights = [2,1,5,6,2,3]
+    Output: 10
+    ```
+
+    **Example 2:**
+
+    ```
+    Input: heights = [2,4]
+    Output: 4
+    ```
+
+    **Constraints:**
+
+    - `1 <= heights.length <= 10^5`
+    - `0 <= heights[i] <= 10^4`
+  solution: |
+    func largestRectangleArea(heights []int) int {
+        n := len(heights)
+        stack := make([]int, 0, n)
+        maxArea := 0
+        for i := 0; i <= n; i++ {
+            var h int
+            if i < n {
+                h = heights[i]
+            }
+            for len(stack) > 0 && h < heights[stack[len(stack)-1]] {
+                height := heights[stack[len(stack)-1]]
+                stack = stack[:len(stack)-1]
+                width := i
+                if len(stack) > 0 {
+                    width = i - stack[len(stack)-1] - 1
+                }
+                area := height * width
+                if area > maxArea {
+                    maxArea = area
+                }
+            }
+            stack = append(stack, i)
+        }
+        return maxArea
+    }
+- short_name: minimum-window-substring
+  title: Minimum Window Substring
+  difficulty: expert
+  category: strings
+  frequency: common
+  signature: minWindow(s string, t string) string
+  url: https://leetcode.com/problems/minimum-window-substring/
+  question_text: |
+    Given two strings `s` and `t` of lengths `m` and `n` respectively, return the minimum window substring of `s` such that every character in `t` (including duplicates) is included in the window. If there is no such substring, return the empty string `""`.
+
+    **Example 1:**
+
+    ```
+    Input: s = "ADOBECODEBANC", t = "ABC"
+    Output: "BANC"
+    ```
+
+    **Example 2:**
+
+    ```
+    Input: s = "a", t = "a"
+    Output: "a"
+    ```
+
+    **Example 3:**
+
+    ```
+    Input: s = "a", t = "aa"
+    Output: ""
+    ```
+
+    **Constraints:**
+
+    - `m == s.length`
+    - `n == t.length`
+    - `1 <= m, n <= 10^5`
+    - `s` and `t` consist of uppercase and lowercase English letters.
+  solution: |
+    func minWindow(s string, t string) string {
+        if len(s) < len(t) {
+            return ""
+        }
+        need := make([]int, 128)
+        for i := range t {
+            need[t[i]]++
+        }
+        have := make([]int, 128)
+        left, right := 0, 0
+        count := 0
+        minLen := len(s) + 1
+        start := 0
+        for right < len(s) {
+            c := s[right]
+            if need[c] > 0 {
+                have[c]++
+                if have[c] <= need[c] {
+                    count++
+                }
+            }
+            for count == len(t) {
+                if right-left+1 < minLen {
+                    minLen = right - left + 1
+                    start = left
+                }
+                lc := s[left]
+                if need[lc] > 0 {
+                    have[lc]--
+                    if have[lc] < need[lc] {
+                        count--
+                    }
+                }
+                left++
+            }
+            right++
+        }
+        if minLen > len(s) {
+            return ""
+        }
+        return s[start : start+minLen]
+    }
+- short_name: palindrome-pairs
+  title: Palindrome Pairs
+  difficulty: expert
+  category: strings
+  frequency: rare
+  signature: palindromePairs(words []string) [][]int
+  url: https://leetcode.com/problems/palindrome-pairs/
+  question_text: |
+    Given a list of unique words, return all pairs of distinct indices `(i, j)` such that the concatenation of `words[i] + words[j]` is a palindrome.
+
+    **Example 1:**
+
+    ```
+    Input: words = ["abcd","dcba","lls","s","sssll"]
+    Output: [[0,1],[1,0],[3,2],[2,4]]
+    ```
+
+    **Example 2:**
+
+    ```
+    Input: words = ["bat","tab","cat"]
+    Output: [[0,1],[1,0]]
+    ```
+
+    **Example 3:**
+
+    ```
+    Input: words = ["a",""]
+    Output: [[0,1],[1,0]]
+    ```
+
+    **Constraints:**
+
+    - `1 <= words.length <= 5000`
+    - `0 <= words[i].length <= 300`
+    - `words[i]` consists of lowercase English letters.
+  solution: |
+    func palindromePairs(words []string) [][]int {
+        rev := make(map[string]int)
+        for i, w := range words {
+            rev[reverse(w)] = i
+        }
+        var res [][]int
+        for i, w := range words {
+            for j := 0; j <= len(w); j++ {
+                left := w[:j]
+                right := w[j:]
+                if isPalindrome(left) {
+                    if k, ok := rev[right]; ok && k != i {
+                        res = append(res, []int{k, i})
+                    }
+                }
+                if len(right) > 0 && isPalindrome(right) {
+                    if k, ok := rev[left]; ok && k != i {
+                        res = append(res, []int{i, k})
+                    }
+                }
+            }
+        }
+        return res
+    }
+
+    func isPalindrome(s string) bool {
+        i, j := 0, len(s)-1
+        for i < j {
+            if s[i] != s[j] {
+                return false
+            }
+            i++
+            j--
+        }
+        return true
+    }
+
+    func reverse(s string) string {
+        b := []byte(s)
+        for i, j := 0, len(b)-1; i < j; i, j = i+1, j-1 {
+            b[i], b[j] = b[j], b[i]
+        }
+        return string(b)
+    }
+- short_name: word-break-ii
+  title: Word Break II
+  difficulty: expert
+  category: dynamic-programming
+  frequency: uncommon
+  signature: wordBreak(s string, wordDict []string) []string
+  url: https://leetcode.com/problems/word-break-ii/
+  question_text: |
+    Given a string `s` and a dictionary of strings `wordDict`, add spaces in `s` to construct a sentence where each word is a valid dictionary word. Return all such possible sentences in any order.
+
+    **Example 1:**
+
+    ```
+    Input: s = "catsanddog", wordDict = ["cat","cats","and","sand","dog"]
+    Output: ["cats and dog","cat sand dog"]
+    ```
+
+    **Example 2:**
+
+    ```
+    Input: s = "pineapplepenapple", wordDict = ["apple","pen","applepen","pine","pineapple"]
+    Output: ["pine apple pen apple","pineapple pen apple","pine applepen apple"]
+    ```
+
+    **Example 3:**
+
+    ```
+    Input: s = "catsandog", wordDict = ["cats","dog","sand","and","cat"]
+    Output: []
+    ```
+
+    **Constraints:**
+
+    - `1 <= s.length <= 20`
+    - `1 <= wordDict.length <= 1000`
+    - `1 <= wordDict[i].length <= 10`
+    - `s` and `wordDict[i]` consist of only lowercase English letters.
+  solution: |
+    func wordBreak(s string, wordDict []string) []string {
+        wordSet := make(map[string]bool)
+        for _, w := range wordDict {
+            wordSet[w] = true
+        }
+        memo := make(map[string][]string)
+        var dfs func(string) []string
+        dfs = func(s string) []string {
+            if res, ok := memo[s]; ok {
+                return res
+            }
+            var res []string
+            if wordSet[s] {
+                res = append(res, s)
+            }
+            for i := 1; i < len(s); i++ {
+                prefix := s[:i]
+                if wordSet[prefix] {
+                    suffixes := dfs(s[i:])
+                    for _, suffix := range suffixes {
+                        res = append(res, prefix+" "+suffix)
+                    }
+                }
+            }
+            memo[s] = res
+            return res
+        }
+        return dfs(s)
+    }
+- short_name: candy
+  title: Candy
+  difficulty: expert
+  category: greedy
+  frequency: uncommon
+  signature: candy(ratings []int) int
+  url: https://leetcode.com/problems/candy/
+  question_text: |
+    There are `n` children standing in a line. Each child is assigned a rating value given in the integer array `ratings`.
+
+    You are giving candies to these children subject to the following requirements:
+
+    - Each child must have at least one candy.
+    - Children with a higher rating get more candies than their neighbors.
+
+    Return the minimum number of candies you need to have to distribute the candies to the children.
+
+    **Example 1:**
+
+    ```
+    Input: ratings = [1,0,2]
+    Output: 5
+    ```
+
+    **Example 2:**
+
+    ```
+    Input: ratings = [1,2,2]
+    Output: 4
+    ```
+
+    **Constraints:**
+
+    - `n == ratings.length`
+    - `1 <= n <= 2 * 10^4`
+    - `0 <= ratings[i] <= 2 * 10^4`
+  solution: |
+    func candy(ratings []int) int {
+        n := len(ratings)
+        candies := make([]int, n)
+        for i := range candies {
+            candies[i] = 1
+        }
+        for i := 1; i < n; i++ {
+            if ratings[i] > ratings[i-1] {
+                candies[i] = candies[i-1] + 1
+            }
+        }
+        for i := n - 2; i >= 0; i-- {
+            if ratings[i] > ratings[i+1] && candies[i] <= candies[i+1] {
+                candies[i] = candies[i+1] + 1
+            }
+        }
+        total := 0
+        for _, c := range candies {
+            total += c
+        }
+        return total
+    }
+- short_name: frog-jump
+  title: Frog Jump
+  difficulty: expert
+  category: dynamic-programming
+  frequency: rare
+  signature: canCross(stones []int) bool
+  url: https://leetcode.com/problems/frog-jump/
+  question_text: |
+    A frog is crossing a river. The river is divided into some number of units, and at each unit, there may or may not exist a stone. The frog can jump on a stone, but it must not jump into the water.
+
+    Given a list of `stones` positions (in units) in sorted ascending order, determine if the frog can cross the river by landing on the last stone. Initially, the frog is on the first stone and assumes the first jump must be of exactly 1 unit.
+
+    If the frog's last jump was `k` units, its next jump must be `k-1`, `k`, or `k+1` units. The frog can only jump in the forward direction.
+
+    **Example 1:**
+
+    ```
+    Input: stones = [0,1,3,5,6,8,12,17]
+    Output: true
+    ```
+
+    **Example 2:**
+
+    ```
+    Input: stones = [0,1,2,3,4,8,9,11]
+    Output: false
+    ```
+
+    **Constraints:**
+
+    - `2 <= stones.length <= 2000`
+    - `0 <= stones[i] <= 2^31 - 1`
+    - `stones[0] == 0`
+    - `stones` is sorted in strictly increasing order.
+  solution: |
+    func canCross(stones []int) bool {
+        stoneSet := make(map[int]bool)
+        for _, s := range stones {
+            stoneSet[s] = true
+        }
+        memo := make(map[[2]int]bool)
+        var dfs func(pos, jump int) bool
+        dfs = func(pos, jump int) bool {
+            if pos == stones[len(stones)-1] {
+                return true
+            }
+            key := [2]int{pos, jump}
+            if val, ok := memo[key]; ok {
+                return val
+            }
+            for nextJump := jump - 1; nextJump <= jump+1; nextJump++ {
+                if nextJump <= 0 {
+                    continue
+                }
+                nextPos := pos + nextJump
+                if stoneSet[nextPos] && dfs(nextPos, nextJump) {
+                    memo[key] = true
+                    return true
+                }
+            }
+            memo[key] = false
+            return false
+        }
+        return dfs(0, 0)
+    }
+- short_name: longest-valid-parentheses
+  title: Longest Valid Parentheses
+  difficulty: expert
+  category: stack
+  frequency: uncommon
+  signature: longestValidParentheses(s string) int
+  url: https://leetcode.com/problems/longest-valid-parentheses/
+  question_text: |
+    Given a string containing just the characters `'('` and `')'`, return the length of the longest valid (well-formed) parentheses substring.
+
+    **Example 1:**
+
+    ```
+    Input: s = "(()"
+    Output: 2
+    ```
+
+    **Example 2:**
+
+    ```
+    Input: s = ")()())"
+    Output: 4
+    ```
+
+    **Example 3:**
+
+    ```
+    Input: s = ""
+    Output: 0
+    ```
+
+    **Constraints:**
+
+    - `0 <= s.length <= 3 * 10^4`
+    - `s[i]` is `'('` or `')'`.
+  solution: |
+    func longestValidParentheses(s string) int {
+        stack := []int{-1}
+        maxLen := 0
+        for i := 0; i < len(s); i++ {
+            if s[i] == '(' {
+                stack = append(stack, i)
+            } else {
+                stack = stack[:len(stack)-1]
+                if len(stack) == 0 {
+                    stack = append(stack, i)
+                } else {
+                    length := i - stack[len(stack)-1]
+                    if length > maxLen {
+                        maxLen = length
+                    }
+                }
+            }
+        }
+        return maxLen
+    }
