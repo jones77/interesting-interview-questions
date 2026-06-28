@@ -19,6 +19,16 @@ type Question struct {
 	Category     string `yaml:"category"`
 }
 
+type QuestionOutput struct {
+	ShortName    string `yaml:"short_name"`
+	Title        string `yaml:"title"`
+	QuestionText string `yaml:"question_text,omitempty"`
+	Hint         string `yaml:"hint,omitempty"`
+	Difficulty   string `yaml:"difficulty"`
+	Category     string `yaml:"category"`
+	Solution     string `yaml:"solution,omitempty"`
+}
+
 func main() {
 	showQuestion := flag.Bool("q", false, "include question text")
 	flag.BoolVar(showQuestion, "questions", false, "include question text")
@@ -41,7 +51,6 @@ func main() {
 		log.Fatal(err)
 	}
 
-	// Build difficulty set from bool flags.
 	wantDifficulty := map[string]bool{}
 	for _, d := range []struct {
 		on   bool
@@ -57,7 +66,6 @@ func main() {
 		}
 	}
 
-	// Parse name filter.
 	var filterNames map[string]bool
 	if *filterFlag != "" {
 		filterNames = map[string]bool{}
@@ -80,6 +88,9 @@ func main() {
 		}
 	}
 
+	verbose := *showQuestion || *showSolution
+
+	var matched []QuestionOutput
 	for _, q := range questions {
 		if len(wantDifficulty) > 0 && !wantDifficulty[q.Difficulty] {
 			continue
@@ -88,20 +99,31 @@ func main() {
 			continue
 		}
 
-		fmt.Printf("%s (%s, %s) — %s\n", q.ShortName, q.Difficulty, q.Category, q.Title)
-
+		out := QuestionOutput{
+			ShortName:  q.ShortName,
+			Title:      q.Title,
+			Difficulty: q.Difficulty,
+			Category:   q.Category,
+		}
 		if *showQuestion {
-			fmt.Println()
-			fmt.Println(q.QuestionText)
+			out.QuestionText = q.QuestionText
+			out.Hint = q.Hint
 		}
 		if *showSolution {
-			fmt.Println("---")
-			if sol, ok := solutions[q.ShortName]; ok {
-				fmt.Println(sol)
-			} else {
-				fmt.Println("(no solution available)")
-			}
+			out.Solution = solutions[q.ShortName]
 		}
-		fmt.Println()
+		matched = append(matched, out)
+	}
+
+	if verbose {
+		outRaw, err := yaml.Marshal(matched)
+		if err != nil {
+			log.Fatal(err)
+		}
+		fmt.Print(string(outRaw))
+	} else {
+		for _, m := range matched {
+			fmt.Printf("%s (%s, %s) — %s\n", m.ShortName, m.Difficulty, m.Category, m.Title)
+		}
 	}
 }
