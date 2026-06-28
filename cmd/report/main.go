@@ -16,7 +16,6 @@ type Question struct {
 	Hint         string `yaml:"hint,omitempty"`
 	Difficulty   string `yaml:"difficulty"`
 	Category     string `yaml:"category"`
-	Solution     string `yaml:"-"`
 }
 
 func main() {
@@ -31,16 +30,15 @@ func main() {
 
 	solutions := readSolutions()
 
-	merged := 0
-	for i, q := range questions {
-		if sol, ok := solutions[q.ShortName]; ok {
-			questions[i].Solution = sol
-			merged++
+	matched := 0
+	for _, q := range questions {
+		if _, ok := solutions[q.ShortName]; ok {
+			matched++
 		}
 	}
 
-	if merged != len(questions) {
-		log.Printf("warning: merged %d solutions for %d questions", merged, len(questions))
+	if matched != len(questions) {
+		log.Printf("warning: matched %d solutions for %d questions", matched, len(questions))
 	}
 
 	for _, q := range questions {
@@ -75,7 +73,9 @@ func writeQuestionFile(q Question) {
 	}
 
 	dir := "questions/" + q.Difficulty + "/" + q.ShortName
-	os.MkdirAll(dir, 0755)
+	if err := os.MkdirAll(dir, 0755); err != nil {
+		log.Fatalf("creating %s: %v", dir, err)
+	}
 	path := dir + "/" + q.ShortName + ".md"
 	if err := os.WriteFile(path, []byte(b.String()), 0644); err != nil {
 		log.Fatalf("writing %s: %v", path, err)
