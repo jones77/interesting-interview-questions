@@ -1,7 +1,7 @@
 // Copy this file and a solution stub into the question directory:
 //
-//   cp skeleton_test.go <short-name>_test.go
-//   cp skeleton_solution.go <short-name>.go
+//   cp templates/skeleton_test.go.tpl questions/<difficulty>/<short-name>/<short-name>_test.go
+//   cp templates/skeleton_solution.go.tpl questions/<difficulty>/<short-name>/<short-name>.go
 //
 // Then implement the function in <short-name>.go
 // and run tests with: go test -v ./questions/<difficulty>/<short-name>/

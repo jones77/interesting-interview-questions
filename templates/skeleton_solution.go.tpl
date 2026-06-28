@@ -1,6 +1,6 @@
 // Copy into the question directory as <short-name>.go.
 //
-//   cp skeleton_solution.go questions/<difficulty>/<short-name>/<short-name>.go
+//   cp templates/skeleton_solution.go.tpl questions/<difficulty>/<short-name>/<short-name>.go
 
 package main
 
