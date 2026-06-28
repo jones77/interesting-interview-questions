@@ -17,6 +17,10 @@ A **rot13 hint** is permissible if hints are traditionally given for that proble
 
 `short_name` must be unique — it becomes the filename (e.g. `two-sum` → `questions/two-sum.md`).
 
+## Difficulty
+
+Valid values: `easy`, `medium`, `hard`, `expert`. Every question must have one.
+
 ## Developer Commands
 
 | Action             | Command                     |
