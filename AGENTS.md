@@ -3,8 +3,10 @@
 ## Structure
 
 Each interview question lives under `questions/<difficulty>/<short-name>/` —
-e.g. `questions/easy/two-sum/`. The `.md` file, test file, and solution stubs
-all live in that directory.
+e.g. `questions/easy/two-sum/`. The `.md` file, test file, and solution stub
+all live in that directory. The solution stub's `package main` comment
+contains the problem statement so the user sees the question when they open
+the `.go` file.
 
 Questions and their reference solutions are stored in separate YAML files.
 The report tool generates `.md` files from the questions only and leaves the solutions out.
@@ -20,7 +22,9 @@ point them to `solutions.yaml` and tell them to solve it themselves first.
 1. Add an entry to `questions.yaml`.
 2. Add its solution to `solutions.yaml`.
 3. Run `go run ./cmd/report/` to generate the `.md` file.
-4. Copy `templates/skeleton_solution.go.tpl` and `templates/skeleton_test.go.tpl`
+4. Write a doc comment on the `package main` line of the solution stub with
+   the problem statement (title, description, and at least one example).
+   Copy `templates/skeleton_solution.go.tpl` and `templates/skeleton_test.go.tpl`
    into the question directory and implement.
 5. Commit `questions.yaml`, `solutions.yaml`, and the new question directory.
 
