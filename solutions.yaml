@@ -1,4 +1,4 @@
-gjb-fhz: |
+two-sum: |
   shap gjbFhz(ahzf []vag, gnetrg vag) []vag {
       z := znxr(znc[vag]vag)
       sbe v, i := enatr ahzf {
@@ -9,7 +9,7 @@ gjb-fhz: |
       }
       erghea avy
   }
-svmmohmm: |
+fizzbuzz: |
   shap svmmOhmm(a vag) []fgevat {
       naf := znxr([]fgevat, a)
       sbe v := 1; v <= a; v++ {
@@ -26,7 +26,7 @@ svmmohmm: |
       }
       erghea naf
   }
-erirefr-fgevat: |
+reverse-string: |
   shap erirefrFgevat(f []olgr) {
       sbe v, w := 0, yra(f)-1; v < w; v, w = v+1, w-1 {
           f[v], f[w] = f[w], f[v]

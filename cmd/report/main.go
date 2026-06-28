@@ -55,10 +55,12 @@ func readSolutions() map[string]string {
 	if err != nil {
 		log.Fatal(err)
 	}
-	decoded := rot13(string(raw))
 	var m map[string]string
-	if err := yaml.Unmarshal([]byte(decoded), &m); err != nil {
+	if err := yaml.Unmarshal(raw, &m); err != nil {
 		log.Fatal(err)
+	}
+	for k, v := range m {
+		m[k] = rot13(v)
 	}
 	return m
 }
