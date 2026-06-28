@@ -38,11 +38,15 @@ Assign based on well-known ratings (LeetCode, etc.).
 
 | Action             | Command                     |
 |--------------------|-----------------------------|
+| Action             | Command                     |
+|--------------------|-----------------------------|
 | List questions     | `go run ./cmd/report/`              |
-| List with questions| `go run ./cmd/report/ -q`           |
+| List with questions| `go run ./cmd/report/ -q all`       |
 | List with solutions| `go run ./cmd/report/ -s`           |
-| List with both     | `go run ./cmd/report/ -q -s`        |
-| Long flags         | `--questions`, `--solutions` also work|
+| List with both     | `go run ./cmd/report/ -q all -s`    |
+| Filter by name     | `go run ./cmd/report/ -q two-sum,fizzbuzz` |
+| Filter by difficulty| `go run ./cmd/report/ --easy --medium` |
+| Long flags         | `--questions`, `--solutions`, `--easy`, `--medium`, `--hard`, `--expert` also work|
 | Build all          | `go build ./...`            |
 | Test all           | `go test ./...`             |
 | Test one           | `go test ./questions/easy/two-sum/` |
