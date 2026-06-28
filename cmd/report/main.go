@@ -19,7 +19,8 @@ type Question struct {
 }
 
 func main() {
-	all := flag.Bool("all", false, "show questions with their reference solutions")
+	showQuestion := flag.Bool("q", false, "include question text")
+	showSolution := flag.Bool("s", false, "include reference solution")
 	flag.Parse()
 
 	questionsRaw, err := os.ReadFile("questions.yaml")
@@ -31,30 +32,34 @@ func main() {
 		log.Fatal(err)
 	}
 
-	if !*all {
-		for _, q := range questions {
-			fmt.Printf("%s (%s, %s)\n", q.ShortName, q.Difficulty, q.Category)
-		}
-		return
-	}
-
-	solutionsRaw, err := os.ReadFile("solutions.yaml")
-	if err != nil {
-		log.Fatal(err)
-	}
 	var solutions map[string]string
-	if err := yaml.Unmarshal(solutionsRaw, &solutions); err != nil {
-		log.Fatal(err)
+	if *showSolution {
+		solutionsRaw, err := os.ReadFile("solutions.yaml")
+		if err != nil {
+			log.Fatal(err)
+		}
+		if err := yaml.Unmarshal(solutionsRaw, &solutions); err != nil {
+			log.Fatal(err)
+		}
 	}
 
 	for _, q := range questions {
-		fmt.Printf("%s (%s, %s)\n", q.ShortName, q.Difficulty, q.Category)
-		fmt.Println("---")
-		if sol, ok := solutions[q.ShortName]; ok {
-			fmt.Println(sol)
-		} else {
-			fmt.Println("(no solution available)")
+		fmt.Printf("%s (%s, %s) — %s\n", q.ShortName, q.Difficulty, q.Category, q.Title)
+
+		if *showQuestion {
+			fmt.Println()
+			fmt.Println(q.QuestionText)
 		}
+
+		if *showSolution {
+			fmt.Println("---")
+			if sol, ok := solutions[q.ShortName]; ok {
+				fmt.Println(sol)
+			} else {
+				fmt.Println("(no solution available)")
+			}
+		}
+
 		fmt.Println()
 	}
 }

@@ -39,7 +39,9 @@ Assign based on well-known ratings (LeetCode, etc.).
 | Action             | Command                     |
 |--------------------|-----------------------------|
 | List questions     | `go run ./cmd/report/`      |
-| List with solutions| `go run ./cmd/report/ --all`|
+| List with questions| `go run ./cmd/report/ -q`   |
+| List with solutions| `go run ./cmd/report/ -s`   |
+| List with both     | `go run ./cmd/report/ -q -s`|
 | Build all          | `go build ./...`            |
 | Test all           | `go test ./...`             |
 | Test one           | `go test ./questions/easy/two-sum/` |
