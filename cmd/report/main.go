@@ -34,6 +34,9 @@ func main() {
 	flag.BoolVar(showQuestion, "questions", false, "include question text")
 	showAll := flag.Bool("a", false, "include both question text and solution")
 	flag.BoolVar(showAll, "all", false, "include both question text and solution")
+	var listMode bool
+	flag.BoolVar(&listMode, "l", false, "list questions (default)")
+	flag.BoolVar(&listMode, "list", false, "list questions (default)")
 	filterFlag := flag.String("f", "", "comma-separated short-names to include (default: all)")
 	flag.StringVar(filterFlag, "filter", "", "comma-separated short-names to include (default: all)")
 	easy := flag.Bool("easy", false, "filter by easy difficulty")
