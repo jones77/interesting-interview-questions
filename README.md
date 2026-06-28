@@ -1,10 +1,10 @@
 # Interesting Interview Questions
 
-A collection of interview programming questions curated through
+A collection of interview programming questions assembled through
 agentic engineering with [opencode](https://opencode.ai)
-and the `big-pickle` model. Every question, difficulty label, and
-convention in this repo was shaped through iterative agent-assisted
-development — not batch-generated or scrape-harvested.
+and the `big-pickle` model. The questions themselves are well-known
+problems from the model's training data; the curation is in the
+difficulty labelling, conventions, and structure of the repo.
 
 ## Difficulty Scale
 
