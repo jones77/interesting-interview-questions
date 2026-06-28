@@ -33,7 +33,9 @@ func main() {
 	showQuestion := flag.Bool("q", false, "include question text")
 	flag.BoolVar(showQuestion, "questions", false, "include question text")
 	showSolution := flag.Bool("s", false, "include reference solution")
-	flag.BoolVar(showSolution, "solutions", false, "include reference solution")
+	flag.BoolVar(showSolution, "solution", false, "include reference solution")
+	showAll := flag.Bool("a", false, "include both question text and solution")
+	flag.BoolVar(showAll, "all", false, "include both question text and solution")
 	filterFlag := flag.String("f", "", "comma-separated short-names to include (default: all)")
 	flag.StringVar(filterFlag, "filter", "", "comma-separated short-names to include (default: all)")
 	easy := flag.Bool("easy", false, "filter by easy difficulty")
@@ -41,6 +43,11 @@ func main() {
 	hard := flag.Bool("hard", false, "filter by hard difficulty")
 	expert := flag.Bool("expert", false, "filter by expert difficulty")
 	flag.Parse()
+
+	if *showAll {
+		*showQuestion = true
+		*showSolution = true
+	}
 
 	questionsRaw, err := os.ReadFile("questions.yaml")
 	if err != nil {
