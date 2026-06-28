@@ -2,27 +2,28 @@
 
 A collection of interview programming questions assembled through
 agentic engineering with [opencode](https://opencode.ai)
-and the `big-pickle` model. Difficulty labels are drawn from
-well-known problem ratings rather than hand-curated.
+and the `big-pickle` model. Difficulty labels follow
+well-known problem ratings.
 
 ## Difficulty Scale
 
 ### Easy — Fizz Buzz
 
-Print numbers 1 to n, replacing multiples of 3 with "Fizz", multiples of 5 with "Buzz",
-and multiples of both with "FizzBuzz".
+Print numbers 1 to n, replacing multiples of 3 with "Fizz",
+multiples of 5 with "Buzz", and multiples of both with "FizzBuzz".
 
-One loop, conditionals, modulo. No data structures.
-The only subtlety: order of conditionals matters.
+One loop, conditionals, and modulo. No data structures needed.
+The order of conditionals is the only trap.
 
 ### Medium — Product of Array Except Self
 
 Given an integer array `nums`, return an array `output` where
 `output[i]` is the product of all elements of `nums` except `nums[i]`.
 
-The constraint: O(n) time, no division.
-Division makes this trivial. Without it, the obvious approach
-(nested loops) is O(n²), and the O(n) path is not immediate.
+The constraint requires O(n) time and bans division.
+Division would make the problem simple.
+Nested loops give O(n²), and the faster path
+needs a different angle.
 
 ### Hard — LRU Cache
 
@@ -37,6 +38,6 @@ is where candidates get tangled.
 
 Convert a binary tree to a string representation and back.
 
-Straightforward at first glance, but the format must encode
-structure unambiguously. Edge cases — skewed trees, empty trees,
-deep recursion — separate solid solutions from shaky ones.
+The problem looks simple. The format needs to encode tree
+structure clearly. Edge cases like skewed trees, empty trees,
+and deep recursion separate solid solutions from shaky ones.

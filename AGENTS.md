@@ -5,13 +5,13 @@
 Each interview question lives in a single `<short-name>.md` file under `questions/` —
 e.g. `questions/two-sum.md`, `questions/fizzbuzz.md`.
 
-Questions and their solutions are stored as YAML.
-The `.md` files are generated output containing only the question —
-**never include the solution** in a `.md` file.
+Questions and their solutions are stored in separate YAML files.
+The report tool generates `.md` files from the questions only
+and leaves the solutions out.
 
-A **hint** is permissible if hints are traditionally given for that problem.
-A hint must not give the game away — it should point at the difficulty
-without revealing the approach.
+A **hint** is fine for problems where a hint is traditional.
+The hint should point at the trouble spot without showing
+the way through it.
 
 ## Adding a Question
 
@@ -25,8 +25,8 @@ without revealing the approach.
 
 ## Difficulty
 
-Valid values: `easy`, `medium`, `hard`, `expert`. Every question must have one.
-Assign based on well-known ratings (LeetCode, etc.) — do not hand-curate.
+Valid values: `easy`, `medium`, `hard`, `expert`. Every question needs one.
+Assign based on well-known ratings (LeetCode, etc.).
 
 ## Developer Commands
 
@@ -43,6 +43,5 @@ Assign based on well-known ratings (LeetCode, etc.) — do not hand-curate.
 
 ## Formatting
 
-Files should follow `.editorconfig` (`max_line_length = 120`)
-and use [semantic line breaks](https://sembr.org) —
-wrap at clause boundaries, not character counts.
+Files should follow `.editorconfig` with a 120-character line limit.
+Use [semantic line breaks](https://sembr.org) and wrap at clause boundaries.
