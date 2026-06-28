@@ -44,6 +44,7 @@ func main() {
 	medium := flag.Bool("medium", false, "filter by medium difficulty")
 	flag.BoolVar(medium, "m", false, "filter by medium difficulty")
 	hard := flag.Bool("hard", false, "filter by hard difficulty")
+	flag.BoolVar(hard, "h", false, "filter by hard difficulty")
 	expert := flag.Bool("expert", false, "filter by expert difficulty")
 	flag.BoolVar(expert, "x", false, "filter by expert difficulty")
 	flag.Parse()
