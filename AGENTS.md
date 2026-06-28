@@ -26,6 +26,7 @@ without revealing the approach.
 ## Difficulty
 
 Valid values: `easy`, `medium`, `hard`, `expert`. Every question must have one.
+Assign based on well-known ratings (LeetCode, etc.) — do not hand-curate.
 
 ## Developer Commands
 

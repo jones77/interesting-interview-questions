@@ -2,9 +2,8 @@
 
 A collection of interview programming questions assembled through
 agentic engineering with [opencode](https://opencode.ai)
-and the `big-pickle` model. The questions themselves are well-known
-problems from the model's training data; the curation is in the
-difficulty labelling, conventions, and structure of the repo.
+and the `big-pickle` model. Difficulty labels are drawn from
+well-known problem ratings rather than hand-curated.
 
 ## Difficulty Scale
 
