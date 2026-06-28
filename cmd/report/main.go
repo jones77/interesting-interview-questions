@@ -53,8 +53,11 @@ func main() {
 
 	hasFilter := *filterFlag != ""
 
-	if *showSolution && !hasFilter {
+	if *showSolution && !hasFilter && !*showAll {
 		log.Fatal("-s requires -f")
+	}
+	if *showAll && hasFilter {
+		log.Fatal("-a and -f are mutually exclusive")
 	}
 
 	if *showAll {
