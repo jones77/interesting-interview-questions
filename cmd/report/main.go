@@ -32,8 +32,8 @@ type QuestionOutput struct {
 func main() {
 	showQuestion := flag.Bool("q", false, "include question text")
 	flag.BoolVar(showQuestion, "questions", false, "include question text")
-	showSolution := flag.Bool("s", false, "include reference solution")
-	flag.BoolVar(showSolution, "solution", false, "include reference solution")
+	showSolution := flag.Bool("s", false, "include reference solution (requires -f)")
+	flag.BoolVar(showSolution, "solution", false, "include reference solution (requires -f)")
 	showAll := flag.Bool("a", false, "include both question text and solution")
 	flag.BoolVar(showAll, "all", false, "include both question text and solution")
 	var listMode bool
@@ -51,7 +51,19 @@ func main() {
 	flag.BoolVar(expert, "x", false, "filter by expert difficulty")
 	flag.Parse()
 
+	hasFilter := *filterFlag != ""
+
+	if *showSolution && !hasFilter {
+		log.Fatal("-s requires -f")
+	}
+
 	if *showAll {
+		*showQuestion = true
+		*showSolution = true
+	}
+
+	// With -f and no -q or -s, show both question text and solution.
+	if hasFilter && !*showQuestion && !*showSolution {
 		*showQuestion = true
 		*showSolution = true
 	}
@@ -81,7 +93,7 @@ func main() {
 	}
 
 	var filterNames map[string]bool
-	if *filterFlag != "" {
+	if hasFilter {
 		filterNames = map[string]bool{}
 		for _, s := range strings.Split(*filterFlag, ",") {
 			s = strings.TrimSpace(s)
@@ -102,7 +114,7 @@ func main() {
 		}
 	}
 
-	verbose := *showQuestion || *showSolution
+	verbose := hasFilter || *showQuestion || *showAll
 
 	var matched []QuestionOutput
 	for _, q := range questions {
