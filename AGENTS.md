@@ -10,16 +10,16 @@ A **rot13 hint** is permissible if hints are traditionally given for that proble
 
 ## Adding a Question
 
-1. Add a new `Question` entry to `seedData()` in `cmd/populate/main.go`.
-2. Run `go run ./cmd/populate/` to rebuild the DB.
-3. Run `go run ./cmd/report/` to regenerate `.md` files.
-4. Commit `cmd/populate/main.go`, `interview-questions.db`, and the new `.md` file.
+1. Run `sqlite3 interview-questions.db` and `INSERT` a new row.
+2. Run `go run ./cmd/report/` to regenerate `.md` files.
+3. Commit `interview-questions.db` and the new `.md` file.
+
+`short_name` must be unique — it becomes the filename (e.g. `two-sum` → `two-sum.md`).
 
 ## Developer Commands
 
 | Action             | Command                     |
 |--------------------|-----------------------------|
-| Populate DB        | `go run ./cmd/populate/`    |
 | Generate reports   | `go run ./cmd/report/`      |
 | Build all          | `go build ./...`            |
 | Test all           | `go test ./...`             |
@@ -33,3 +33,9 @@ questions (id, short_name, title, question_text, solution, hint, difficulty, cat
 - `question_text` → what goes in the `.md` file (the problem statement).
 - `solution` → the answer, stored in the DB only, never written to markdown.
 - `hint` → optional rot13-ciphered hint string.
+
+## Init (first time)
+
+```sh
+sqlite3 interview-questions.db < schema.sql
+```
