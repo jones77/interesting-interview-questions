@@ -19,8 +19,12 @@ type Question struct {
 }
 
 func main() {
-	showQuestion := flag.Bool("q", false, "include question text")
-	showSolution := flag.Bool("s", false, "include reference solution")
+	var showQuestion bool
+	flag.BoolVar(&showQuestion, "q", false, "include question text")
+	flag.BoolVar(&showQuestion, "questions", false, "include question text")
+	var showSolution bool
+	flag.BoolVar(&showSolution, "s", false, "include reference solution")
+	flag.BoolVar(&showSolution, "solutions", false, "include reference solution")
 	flag.Parse()
 
 	questionsRaw, err := os.ReadFile("questions.yaml")
@@ -33,7 +37,7 @@ func main() {
 	}
 
 	var solutions map[string]string
-	if *showSolution {
+	if showSolution {
 		solutionsRaw, err := os.ReadFile("solutions.yaml")
 		if err != nil {
 			log.Fatal(err)
@@ -46,12 +50,12 @@ func main() {
 	for _, q := range questions {
 		fmt.Printf("%s (%s, %s) — %s\n", q.ShortName, q.Difficulty, q.Category, q.Title)
 
-		if *showQuestion {
+		if showQuestion {
 			fmt.Println()
 			fmt.Println(q.QuestionText)
 		}
 
-		if *showSolution {
+		if showSolution {
 			fmt.Println("---")
 			if sol, ok := solutions[q.ShortName]; ok {
 				fmt.Println(sol)
