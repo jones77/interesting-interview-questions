@@ -40,9 +40,12 @@ func main() {
 	filterFlag := flag.String("f", "", "comma-separated short-names to include (default: all)")
 	flag.StringVar(filterFlag, "filter", "", "comma-separated short-names to include (default: all)")
 	easy := flag.Bool("easy", false, "filter by easy difficulty")
+	flag.BoolVar(easy, "e", false, "filter by easy difficulty")
 	medium := flag.Bool("medium", false, "filter by medium difficulty")
+	flag.BoolVar(medium, "m", false, "filter by medium difficulty")
 	hard := flag.Bool("hard", false, "filter by hard difficulty")
 	expert := flag.Bool("expert", false, "filter by expert difficulty")
+	flag.BoolVar(expert, "x", false, "filter by expert difficulty")
 	flag.Parse()
 
 	showSolution := *showAll
