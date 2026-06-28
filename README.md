@@ -11,6 +11,8 @@ The examples below illustrate the kind of problem you will find at each level.
 
 ### Easy — Fizz Buzz
 
+[`questions/fizzbuzz-easy.md`](questions/fizzbuzz-easy.md)
+
 Print numbers 1 to n, replacing multiples of 3 with "Fizz",
 multiples of 5 with "Buzz", and multiples of both with "FizzBuzz".
 
@@ -18,6 +20,8 @@ One loop, conditionals, and modulo. No data structures needed.
 The order of conditionals is the only trap.
 
 ### Medium — Product of Array Except Self
+
+[`questions/product-array-except-self-medium.md`](questions/product-array-except-self-medium.md)
 
 Given an integer array `nums`, return an array `output` where
 `output[i]` is the product of all elements of `nums` except `nums[i]`.
@@ -28,6 +32,8 @@ Nested loops give O(n²), and the faster path needs a different angle.
 
 ### Hard — LRU Cache
 
+[`questions/lru-cache-hard.md`](questions/lru-cache-hard.md)
+
 Design a data structure supporting `get` and `put` in O(1) average time,
 evicting the least recently used entry when full.
 
@@ -36,6 +42,8 @@ O(1) put with eviction means something else must track recency.
 Combining both correctly is where candidates get tangled.
 
 ### Expert — Serialize and Deserialize Binary Tree
+
+[`questions/serialize-deserialize-binary-tree-expert.md`](questions/serialize-deserialize-binary-tree-expert.md)
 
 Convert a binary tree to a string representation and back.
 

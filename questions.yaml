@@ -104,3 +104,96 @@
 
     - `1 <= s.length <= 10^5`
     - `s[i]` is a printable ascii character.
+
+- short_name: product-array-except-self
+  title: Product of Array Except Self
+  difficulty: medium
+  category: arrays
+  question_text: |
+    Given an integer array `nums`, return an array `answer` such that `answer[i]` is equal to the product of all the elements of `nums` except `nums[i]`.
+
+    The product of any prefix or suffix of `nums` is guaranteed to fit in a 32-bit integer.
+
+    You must write an algorithm that runs in O(n) time and without using the division operation.
+
+    **Example 1:**
+
+    ```
+    Input: nums = [1,2,3,4]
+    Output: [24,12,8,6]
+    ```
+
+    **Example 2:**
+
+    ```
+    Input: nums = [-1,1,0,-3,3]
+    Output: [0,0,9,0,0]
+    ```
+
+    **Constraints:**
+
+    - `2 <= nums.length <= 10^5`
+    - `-30 <= nums[i] <= 30`
+
+- short_name: lru-cache
+  title: LRU Cache
+  difficulty: hard
+  category: design
+  question_text: |
+    Design a data structure that follows the constraints of a **Least Recently Used (LRU) cache**.
+
+    Implement the `LRUCache` class:
+
+    - `LRUCache(int capacity)` Initialize the LRU cache with **positive** size `capacity`.
+    - `int get(int key)` Return the value of the `key` if the key exists, otherwise return `-1`.
+    - `void put(int key, int value)` Update the value of the `key` if the `key` exists. Otherwise, add the key-value pair to the cache. If the number of keys exceeds the `capacity` from this operation, **evict** the least recently used key.
+
+    The functions `get` and `put` must each run in O(1) average time complexity.
+
+    **Example:**
+
+    ```
+    Input
+    ["LRUCache", "put", "put", "get", "put", "get", "put", "get", "get", "get"]
+    [[2], [1, 1], [2, 2], [1], [3, 3], [2], [4, 4], [1], [3], [4]]
+
+    Output
+    [null, null, null, 1, null, -1, null, -1, 3, 4]
+    ```
+
+    **Constraints:**
+
+    - `1 <= capacity <= 3000`
+    - `0 <= key <= 10^4`
+    - `0 <= value <= 10^5`
+    - At most `2 * 10^5` calls will be made to `get` and `put`.
+
+- short_name: serialize-deserialize-binary-tree
+  title: Serialize and Deserialize Binary Tree
+  difficulty: expert
+  category: trees
+  question_text: |
+    Serialization is the process of converting a data structure or object into a sequence of bits so that it can be stored in a file or memory buffer, or transmitted across a network connection link to be reconstructed later in the same or another computer environment.
+
+    Design an algorithm to serialize and deserialize a binary tree. There is no restriction on how your serialization/deserialization algorithm should work. You just need to ensure that a binary tree can be serialized to a string and this string can be deserialized to the original tree structure.
+
+    **Clarification:** The input/output format is the same as how LeetCode serializes a binary tree. You do not necessarily need to follow this format, so please be creative and come up with different approaches yourself.
+
+    **Example 1:**
+
+    ```
+    Input: root = [1,2,3,null,null,4,5]
+    Output: [1,2,3,null,null,4,5]
+    ```
+
+    **Example 2:**
+
+    ```
+    Input: root = []
+    Output: []
+    ```
+
+    **Constraints:**
+
+    - The number of nodes in the tree is in the range `[0, 10^4]`.
+    - `-1000 <= Node.val <= 1000`

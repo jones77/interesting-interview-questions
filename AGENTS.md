@@ -2,8 +2,8 @@
 
 ## Structure
 
-Each interview question lives in a single `<short-name>.md` file under `questions/` —
-e.g. `questions/two-sum.md`, `questions/fizzbuzz.md`.
+Each interview question lives in a single `<short-name>-<difficulty>.md` file under `questions/` —
+e.g. `questions/two-sum-easy.md`, `questions/fizzbuzz-easy.md`.
 
 Questions and their solutions are stored in separate YAML files.
 The report tool generates `.md` files from the questions only and leaves the solutions out.
@@ -19,7 +19,7 @@ The hint should point at the trouble spot without showing the way through it.
 4. Commit `questions.yaml`, `solutions.yaml`, and the new `.md` file.
 
 `short_name` must be unique — it becomes the filename
-(e.g. `two-sum` → `questions/two-sum.md`).
+(e.g. `two-sum-easy` → `questions/two-sum-easy.md`).
 
 ## Difficulty
 

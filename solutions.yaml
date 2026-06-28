@@ -32,3 +32,104 @@ reverse-string: |
           s[i], s[j] = s[j], s[i]
       }
   }
+product-array-except-self: |
+  func productExceptSelf(nums []int) []int {
+      n := len(nums)
+      ans := make([]int, n)
+      for i := range ans {
+          ans[i] = 1
+      }
+      prefix := 1
+      for i := 0; i < n; i++ {
+          ans[i] = prefix
+          prefix *= nums[i]
+      }
+      suffix := 1
+      for i := n - 1; i >= 0; i-- {
+          ans[i] *= suffix
+          suffix *= nums[i]
+      }
+      return ans
+  }
+lru-cache: |
+  type LRUCache struct {
+      cap  int
+      m    map[int]*list.Element
+      list *list.List
+  }
+
+  type entry struct {
+      key   int
+      value int
+  }
+
+  func Constructor(capacity int) LRUCache {
+      return LRUCache{
+          cap:  capacity,
+          m:    make(map[int]*list.Element),
+          list: list.New(),
+      }
+  }
+
+  func (c *LRUCache) Get(key int) int {
+      if el, ok := c.m[key]; ok {
+          c.list.MoveToFront(el)
+          return el.Value.(entry).value
+      }
+      return -1
+  }
+
+  func (c *LRUCache) Put(key int, value int) {
+      if el, ok := c.m[key]; ok {
+          el.Value = entry{key, value}
+          c.list.MoveToFront(el)
+          return
+      }
+      if c.list.Len() == c.cap {
+          back := c.list.Back()
+          delete(c.m, back.Value.(entry).key)
+          c.list.Remove(back)
+      }
+      c.m[key] = c.list.PushFront(entry{key, value})
+  }
+serialize-deserialize-binary-tree: |
+  type Codec struct{}
+
+  func Constructor() Codec {
+      return Codec{}
+  }
+
+  func (c *Codec) serialize(root *TreeNode) string {
+      var b strings.Builder
+      var preorder func(*TreeNode)
+      preorder = func(n *TreeNode) {
+          if n == nil {
+              b.WriteString("null,")
+              return
+          }
+          b.WriteString(fmt.Sprintf("%d,", n.Val))
+          preorder(n.Left)
+          preorder(n.Right)
+      }
+      preorder(root)
+      return b.String()
+  }
+
+  func (c *Codec) deserialize(data string) *TreeNode {
+      nodes := strings.Split(data, ",")
+      i := 0
+      var build func() *TreeNode
+      build = func() *TreeNode {
+          if nodes[i] == "null" {
+              i++
+              return nil
+          }
+          val, _ := strconv.Atoi(nodes[i])
+          i++
+          n := &TreeNode{Val: val}
+          n.Left = build()
+          n.Right = build()
+          return n
+      }
+      return build()
+  }
