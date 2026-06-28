@@ -22,8 +22,8 @@ point them to `solutions.yaml` and tell them to solve it themselves first.
 1. Add an entry to `questions.yaml`.
 2. Add its solution to `solutions.yaml`.
 3. Run `go run ./cmd/report/` to generate the `.md` file.
-4. Write a doc comment on the `package main` line of the solution stub with
-   the problem statement (title, description, and at least one example).
+4. Write a doc comment before the `package main` statement of the solution stub
+   with the problem statement (title, description, and at least one example).
    Copy `templates/skeleton_solution.go.tpl` and `templates/skeleton_test.go.tpl`
    into the question directory and implement.
 5. Commit `questions.yaml`, `solutions.yaml`, and the new question directory.

@@ -28,36 +28,11 @@ func main() {
 		log.Fatal(err)
 	}
 
-	solutions := readSolutions()
-
-	matched := 0
-	for _, q := range questions {
-		if _, ok := solutions[q.ShortName]; ok {
-			matched++
-		}
-	}
-
-	if matched != len(questions) {
-		log.Printf("warning: matched %d solutions for %d questions", matched, len(questions))
-	}
-
 	for _, q := range questions {
 		writeQuestionFile(q)
 	}
 
 	fmt.Printf("wrote %d question files\n", len(questions))
-}
-
-func readSolutions() map[string]string {
-	raw, err := os.ReadFile("solutions.yaml")
-	if err != nil {
-		log.Fatal(err)
-	}
-	var m map[string]string
-	if err := yaml.Unmarshal(raw, &m); err != nil {
-		log.Fatal(err)
-	}
-	return m
 }
 
 func writeQuestionFile(q Question) {

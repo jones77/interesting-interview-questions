@@ -4,9 +4,9 @@ Clone this repo, implement your own solutions, and make the tests pass.
 Reference solutions are in `solutions.yaml` for when you want to check
 your work — solve it first, then peek.
 
-The questions and reference solutions were assembled through agentic engineering
-with [opencode](https://opencode.ai) and the `big-pickle` model.
-Difficulty labels follow well-known problem ratings.
+Each question lives in `questions/<difficulty>/<short-name>/`.
+Open the `.go` file to see the problem statement and write your solution.
+Make the tests in `*_test.go` pass.
 
 ## Difficulty Scale
 
@@ -14,7 +14,7 @@ The examples below illustrate the kind of problem you will find at each level.
 
 ### Easy — Fizz Buzz
 
-[`questions/easy/fizzbuzz/fizzbuzz.md`](questions/easy/fizzbuzz/fizzbuzz.md)
+[`questions/easy/fizzbuzz/fizzbuzz.go`](questions/easy/fizzbuzz/fizzbuzz.go)
 
 Print numbers 1 to n, replacing multiples of 3 with "Fizz",
 multiples of 5 with "Buzz", and multiples of both with "FizzBuzz".
@@ -24,7 +24,7 @@ The order of conditionals is the only trap.
 
 ### Medium — Product of Array Except Self
 
-[`questions/medium/product-array-except-self/product-array-except-self.md`](questions/medium/product-array-except-self/product-array-except-self.md)
+[`questions/medium/product-array-except-self/product-array-except-self.go`](questions/medium/product-array-except-self/product-array-except-self.go)
 
 Given an integer array `nums`, return an array `output` where
 `output[i]` is the product of all elements of `nums` except `nums[i]`.
@@ -35,7 +35,7 @@ Nested loops give O(n²), and the faster path needs a different angle.
 
 ### Hard — LRU Cache
 
-[`questions/hard/lru-cache/lru-cache.md`](questions/hard/lru-cache/lru-cache.md)
+[`questions/hard/lru-cache/lru-cache.go`](questions/hard/lru-cache/lru-cache.go)
 
 Design a data structure supporting `get` and `put` in O(1) average time,
 evicting the least recently used entry when full.
@@ -46,7 +46,7 @@ Combining both correctly is where candidates get tangled.
 
 ### Expert — Serialize and Deserialize Binary Tree
 
-[`questions/expert/serialize-deserialize-binary-tree/serialize-deserialize-binary-tree.md`](questions/expert/serialize-deserialize-binary-tree/serialize-deserialize-binary-tree.md)
+[`questions/expert/serialize-deserialize-binary-tree/serialize-deserialize-binary-tree.go`](questions/expert/serialize-deserialize-binary-tree/serialize-deserialize-binary-tree.go)
 
 Convert a binary tree to a string representation and back.
 
