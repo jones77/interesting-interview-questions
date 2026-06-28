@@ -1,7 +1,0 @@
-#!/bin/sh
-# ROT13 encode/decode stdin or file argument.
-# Usage: rot13 < file    or    rot13 file
-if [ $# -ge 1 ]; then
-    exec < "$1"
-fi
-exec tr 'A-Za-z' 'N-ZA-Mn-za-m'

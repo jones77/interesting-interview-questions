@@ -59,23 +59,7 @@ func readSolutions() map[string]string {
 	if err := yaml.Unmarshal(raw, &m); err != nil {
 		log.Fatal(err)
 	}
-	for k, v := range m {
-		m[k] = rot13(v)
-	}
 	return m
-}
-
-func rot13(s string) string {
-	return strings.Map(func(r rune) rune {
-		switch {
-		case 'a' <= r && r <= 'z':
-			return 'a' + (r-'a'+13)%26
-		case 'A' <= r && r <= 'Z':
-			return 'A' + (r-'A'+13)%26
-		default:
-			return r
-		}
-	}, s)
 }
 
 func writeQuestionFile(q Question) {
