@@ -4,3 +4,8 @@
 interesting-interview-questions
 .DS_Store
 questions.yaml.bak
+
+# Per-problem binaries (a plain `go build` in a package main dir)
+questions/*/*/go/*
+!questions/*/*/go/go.mod
+!questions/*/*/go/*.go
