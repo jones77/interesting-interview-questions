@@ -2,51 +2,85 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
-if [ "${FORCE:-}" != "1" ]; then
-	# ---- Phase 1: detect implementations -------------------------------
-	echo ":: checking for implemented stubs"
+# ---- Phase 1: detect dirty generated files -------------------------------
+echo ":: checking for dirty generated files"
 
-	tmp=$(mktemp -d)
-	trap 'rm -rf "$tmp"' EXIT
+tmp=$(mktemp -d)
+trap 'rm -rf "$tmp"' EXIT
 
-	while IFS= read -r f; do
-		mkdir -p "$tmp/$(dirname "$f")"
-		cp "$f" "$tmp/$f"
-	done < <(find questions -name '*.go' -not -name '*_test.go')
+save() {
+	mkdir -p "$tmp/$(dirname "$1")"
+	cp "$1" "$tmp/$1"
+}
 
-	go run ./cmd/generate/ 1>/dev/null
-
-	dirty=false
-	while IFS= read -r f; do
-		if ! diff -q "$f" "$tmp/$f" >/dev/null 2>&1; then
-			echo "  dirty: $f"
-			dirty=true
-		fi
-	done < <(find questions -name '*.go' -not -name '*_test.go')
-
-	if $dirty; then
-		find "$tmp/questions" -name '*.go' -not -name '*_test.go' | while IFS= read -r saved; do
-			rel="${saved#$tmp/}"
-			cp "$saved" "$rel"
-		done
-		echo ""
-		echo "Aborting — stubs have been modified (implemented?)."
-		echo "Set FORCE=1 to overwrite."
-		exit 1
+restore() {
+	if [ -f "$tmp/$1" ]; then
+		mkdir -p "$(dirname "$1")"
+		cp "$tmp/$1" "$1"
+	else
+		rm -f "$1"
 	fi
+}
 
-	echo "  all clean"
+generated() {
+	find questions -name README.md
+	find questions -path 'questions/*/*/go/go.mod'
+	find questions -path 'questions/*/*/go/*.go' -not -name '*_test.go'
+}
+
+while IFS= read -r f; do
+	save "$f"
+done < <(generated)
+
+go run ./cmd/generate/ 1>/dev/null
+
+dirty=false
+while IFS= read -r f; do
+	if ! diff -q "$tmp/$f" "$f" >/dev/null 2>&1; then
+		echo "  dirty: $f"
+		dirty=true
+	fi
+done < <(generated)
+
+if $dirty; then
+	while IFS= read -r f; do
+		restore "$f"
+	done < <(generated)
 	echo ""
-else
-	echo ":: forced regeneration"
-	go run ./cmd/generate/ 1>/dev/null
-	echo ""
+	echo "Aborting — generated files have been modified (implemented?)."
+	echo "Set FORCE=1 to overwrite."
+	exit 1
 fi
 
-# ---- Phase 2: build ----------------------------------------------------
-echo ":: go build ./..."
+echo "  all clean"
+echo ""
+
+# ---- Phase 2: root build --------------------------------------------------
+echo ":: go build ./... (root)"
 go build ./...
 echo "  ok"
 echo ""
 
+# ---- Phase 3: per-problem build and failing-test checks -------------------
+fails=0
+while IFS= read -r d; do
+	echo ":: ${d#questions/}"
+	(cd "$d" && go build ./...) || {
+		echo "  BUILD FAILED"
+		fails=$((fails + 1))
+		continue
+	}
+	if (cd "$d" && go test ./... >/dev/null 2>&1); then
+		echo "  tests PASS (implemented?)"
+		fails=$((fails + 1))
+	fi
+done < <(find questions -path 'questions/*/*/go' -type d | sort)
+
+if [ "$fails" -gt 0 ]; then
+	echo ""
+	echo "$fails problem(s) failed verification."
+	exit 1
+fi
+
+echo ""
 echo "All checks passed."

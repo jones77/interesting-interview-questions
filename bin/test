@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+set -uo pipefail
+cd "$(dirname "$0")/.."
+
+count=0
+failed=0
+
+run_dir() {
+	local dir=$1
+	shift
+	echo "== $dir"
+	if ! (cd "$dir" && "$@"); then
+		failed=$((failed + 1))
+	fi
+	count=$((count + 1))
+}
+
+for d in $(find questions -path 'questions/*/*/go' -type d | sort); do
+	run_dir "$d" go test ./...
+done
+
+for d in $(find questions -path 'questions/*/*/python' -type d | sort); do
+	run_dir "$d" python -m unittest
+done
+
+echo ""
+echo "$count language directories tested, $failed failed."
+exit $((failed > 0))

@@ -4,6 +4,11 @@ Clone this repo, implement your own solutions, and make the tests pass.
 Reference solutions are in `questions.yaml` for when you want to check
 your work — solve it first, then peek.
 
+Each problem is a self-contained program: the problem statement lives in
+the problem's `README.md`, and each supported language has its own folder
+(`go/` now, `python/` in the future) with code and tests that need nothing
+outside that folder.
+
 ## For Users
 
 ```bash
@@ -11,14 +16,15 @@ your work — solve it first, then peek.
 git clone <repo-url>
 cd interesting-interview-questions
 
-# Run tests for all questions
-go test ./...
-
 # Run tests for a single question
-go test ./questions/easy/two-sum/
+cd questions/easy/two-sum/go
+go test ./...
 
 # List available questions
 go run ./cmd/report/
+
+# Run every question's tests (from the repo root)
+./bin/test
 
 # Show question text and solution for specific ones
 go run ./cmd/report/ -f two-sum,fizzbuzz -s
@@ -28,23 +34,31 @@ go run ./cmd/report/ -d easy,medium
 ```
 
 1. Pick a question (`go run ./cmd/report/`).
-2. Open the stub — the problem statement is in the doc comment.
-3. Implement your solution in the function body.
-4. Run the tests (`go test ./questions/<difficulty>/<short-name>/`).
+2. Open `questions/<difficulty>/<short-name>/README.md` — the problem
+   statement.
+3. Implement your solution in the stub inside
+   `questions/<difficulty>/<short-name>/go/` (a runnable Go module).
+4. Run the tests (`cd questions/<difficulty>/<short-name>/go && go test ./...`).
 5. Green? Check the official solution in `questions.yaml` (under `solution`).
 6. Red? Debug and try again.
 
 ## For Maintainers
 
 `questions.yaml` is the single source of truth for question metadata
-and Go function signatures. Stub `.go` files are generated from it.
+and Go function signatures. From it, `cmd/generate` produces each
+problem's `README.md`, `go.mod`, and stub. Stub code and `README.md`
+are generated artifacts — never edit them by hand, and never put a
+solution in a stub (solutions live only in `questions.yaml`).
 
 ```bash
-# Regenerate stubs and verify everything builds
+# Regenerate stubs/READMEs and verify everything (builds pass, tests fail)
 ./bin/sync
 
 # Overwrite implemented stubs during regeneration
 FORCE=1 ./bin/sync
+
+# Run every question's test suite
+./bin/test
 ```
 
 To add a question:
@@ -53,8 +67,10 @@ To add a question:
    (see existing entries for the `signature` / `kind` format).
 2. Add a `solution` field to the entry in `questions.yaml`.
 3. Write a test file at
-   `questions/<difficulty>/<short-name>/<short-name>_test.go`.
-4. Run `./bin/sync` to regenerate the stub.
+   `questions/<difficulty>/<short-name>/go/<short-name>_test.go`
+   (`package main`, same folder as the stub — the real tests that verify
+   a solved implementation).
+4. Run `./bin/sync` to generate the `README.md`, `go.mod`, and stub.
 5. Commit `questions.yaml` and the new directory.
 
 ## Difficulty Scale

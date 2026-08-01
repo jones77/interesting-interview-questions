@@ -3,8 +3,17 @@
 ## Structure
 
 Each question lives in `questions/<difficulty>/<short-name>/` with:
-a generated stub (`<short-name>.go`), a test file (`<short-name>_test.go`),
-and a `package main` doc comment.
+a generated `README.md` (the problem statement — a single copy, not
+duplicated in code), and one self-contained language subdirectory per
+implementation (`go/` now, `python/` in a follow-up).
+
+A Go problem is its own module: `questions/<difficulty>/<short-name>/go/`
+holds a generated `go.mod`, a generated `package main` stub with a trivial
+`func main() {}`, and a hand-written test file (`<short-name>_test.go`,
+also `package main`) with the real tests that verify a solved
+implementation. Problems never import repo-internal packages; shared
+`TreeNode`/`ListNode` types are inlined per problem. Stubs must compile
+and must fail their tests (the committed state is always unimplemented).
 
 `questions.yaml` is the single source of truth for titles, difficulties,
 categories, frequency, Go function signatures, and reference solutions.
@@ -20,8 +29,10 @@ as well as other sources. They are not copied from a single site.
 1. Add entry to `questions.yaml` (include `signature` for function-style
    questions or `kind` for struct-style — see existing entries).
 2. Add a `solution` field to the entry in `questions.yaml`.
-3. Write a test file at `questions/<difficulty>/<short-name>/<short-name>_test.go`.
-4. Run `./bin/sync` to regenerate the stub `.go` file.
+3. Write a test file at
+   `questions/<difficulty>/<short-name>/go/<short-name>_test.go`
+   (`package main`, same folder as the stub).
+4. Run `./bin/sync` to generate the `README.md`, `go.mod`, and stub.
 5. Commit `questions.yaml` and the new directory.
 
 `short_name` must be unique — it becomes the directory name.
@@ -30,13 +41,18 @@ as well as other sources. They are not copied from a single site.
 
 | Action             | Command                                  |
 |--------------------|------------------------------------------|
-| Build all          | `go build ./...`                         |
-| Test all           | `go test ./...`                          |
-| Test one           | `go test ./questions/easy/two-sum/`      |
+| Build tooling      | `go build ./...` (root module only)      |
+| Test one           | `cd questions/easy/two-sum/go && go test ./...` |
+| Test all questions | `./bin/test`                             |
 | List / query       | `go run ./cmd/report/`                   |
 | Flag docs          | `go run ./cmd/report/ -h`                |
-| Generate stubs     | `./bin/sync`                          |
-| Force-regenerate   | `FORCE=1 ./bin/sync`                  |
+| Regenerate + verify| `./bin/sync`                             |
+| Force-regenerate   | `FORCE=1 ./bin/sync`                     |
+
+`./bin/sync` regenerates stubs/READMEs, aborts on dirty generated files,
+builds the root module, and verifies every problem builds and fails its
+tests. `./bin/test` runs every problem's test suite. The root `go test
+./...` does not reach problems — each has its own nested module.
 
 ## Style
 
