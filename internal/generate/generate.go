@@ -47,17 +47,22 @@ func EmitAll(rootDir string) ([]question.Spec, error) {
 	return specs, nil
 }
 
-// EmitSpec writes the README.md, go.mod, and Go stub for one question.
+// EmitSpec writes the README.md, go.mod, Go stub, and Python stub for one question.
 func EmitSpec(rootDir, goVersion string, s question.Spec) error {
 	dir := QuestionDir(rootDir, s)
 	goDir := filepath.Join(dir, "go")
+	pyDir := filepath.Join(dir, "python")
 	if err := os.MkdirAll(goDir, 0o755); err != nil {
 		return err
 	}
+	if err := os.MkdirAll(pyDir, 0o755); err != nil {
+		return err
+	}
 	files := map[string]string{
-		filepath.Join(dir, "README.md"):         renderREADME(s),
-		filepath.Join(goDir, "go.mod"):          renderGoMod(s, goVersion),
-		filepath.Join(goDir, s.ShortName+".go"): renderGoStub(s),
+		filepath.Join(dir, "README.md"):           renderREADME(s),
+		filepath.Join(goDir, "go.mod"):            renderGoMod(s, goVersion),
+		filepath.Join(goDir, s.ShortName+".go"):   renderGoStub(s),
+		filepath.Join(pyDir, pythonModuleName(s)): renderPythonStub(s),
 	}
 	for path, content := range files {
 		if err := os.WriteFile(path, []byte(content), 0o644); err != nil {
@@ -65,6 +70,11 @@ func EmitSpec(rootDir, goVersion string, s question.Spec) error {
 		}
 	}
 	return nil
+}
+
+// pythonModuleName returns the Python module filename for a question.
+func pythonModuleName(s question.Spec) string {
+	return strings.ReplaceAll(s.ShortName, "-", "_") + ".py"
 }
 
 // ModuleName returns the bare module name for a question's Go module.

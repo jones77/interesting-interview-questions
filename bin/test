@@ -20,7 +20,7 @@ for d in $(find questions -path 'questions/*/*/go' -type d | sort); do
 done
 
 for d in $(find questions -path 'questions/*/*/python' -type d | sort); do
-	run_dir "$d" python -m unittest
+	run_dir "$d" python3 -m unittest
 done
 
 echo ""

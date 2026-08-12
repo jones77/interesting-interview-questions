@@ -4,6 +4,7 @@
   category: general
   frequency: common
   signature: fizzBuzz(n int) []string
+  python_signature: 'def fizz_buzz(n: int) -> list[str]:'
   url: https://leetcode.com/problems/fizz-buzz/
   question_text: |
     Given an integer `n`, return a string array `answer` (1-indexed) where:
@@ -60,6 +61,7 @@
   category: math
   frequency: uncommon
   signature: isHappy(n int) bool
+  python_signature: 'def is_happy(n: int) -> bool:'
   url: https://leetcode.com/problems/happy-number/
   question_text: |
     A happy number is a number defined by the following process:
@@ -106,6 +108,7 @@
   category: strings
   frequency: common
   signature: reverseString(s []byte)
+  python_signature: 'def reverse_string(s: list[str]) -> None:'
   url: https://leetcode.com/problems/reverse-string/
   question_text: |
     Write a function that reverses a string. The input string is given as an array of characters `s`.
@@ -142,6 +145,7 @@
   category: arrays
   frequency: common
   signature: twoSum(nums []int, target int) []int
+  python_signature: 'def two_sum(nums: list[int], target: int) -> list[int]:'
   url: https://leetcode.com/problems/two-sum/
   question_text: |
     Given an array of integers `nums` and an integer `target`, return indices of the two numbers that add up to `target`.
@@ -197,6 +201,7 @@
   category: arrays
   frequency: rare
   signature: countSmaller(nums []int) []int
+  python_signature: 'def count_smaller(nums: list[int]) -> list[int]:'
   url: https://leetcode.com/problems/count-of-smaller-numbers-after-self/
   question_text: |
     Given an integer array `nums`, return an integer array `counts` where
@@ -276,6 +281,7 @@
   category: graph
   frequency: uncommon
   signature: alienOrder(words []string) string
+  python_signature: 'def alien_order(words: list[str]) -> str:'
   url: https://leetcode.com/problems/alien-dictionary/
   question_text: |
     There is a new alien language which uses the Latin alphabet. The order
@@ -359,6 +365,7 @@
   category: trees
   frequency: common
   kind: max-path-tree
+  python_signature: 'def max_path_sum(root: TreeNode | None) -> int:'
   url: https://leetcode.com/problems/binary-tree-maximum-path-sum/
   question_text: |
     A path in a binary tree is a sequence of nodes where each pair of
@@ -419,6 +426,7 @@
   category: dynamic-programming
   frequency: uncommon
   signature: maxCoins(nums []int) int
+  python_signature: 'def max_coins(nums: list[int]) -> int:'
   url: https://leetcode.com/problems/burst-balloons/
   question_text: |
     You are given `n` balloons, indexed from `0` to `n - 1`. Each balloon is
@@ -485,6 +493,7 @@
   category: matrix
   frequency: uncommon
   signature: longestIncreasingPath(matrix [][]int) int
+  python_signature: 'def longest_increasing_path(matrix: list[list[int]]) -> int:'
   url: https://leetcode.com/problems/longest-increasing-path-in-a-matrix/
   question_text: |
     Given an `m x n` integers matrix, return the length of the longest
@@ -709,6 +718,7 @@
   category: stack
   frequency: uncommon
   signature: evalRPN(tokens []string) int
+  python_signature: 'def eval_rpn(tokens: list[str]) -> int:'
   url: https://leetcode.com/problems/evaluate-reverse-polish-notation/
   question_text: |
     Evaluate the value of an arithmetic expression in Reverse Polish
@@ -766,6 +776,7 @@
   category: arrays
   frequency: common
   signature: findDuplicate(nums []int) int
+  python_signature: 'def find_duplicate(nums: list[int]) -> int:'
   url: https://leetcode.com/problems/find-the-duplicate-number/
   question_text: |
     Given an array of integers `nums` containing `n + 1` integers where each
@@ -813,6 +824,7 @@
   category: dynamic-programming
   frequency: uncommon
   signature: minPathSum(grid [][]int) int
+  python_signature: 'def min_path_sum(grid: list[list[int]]) -> int:'
   url: https://leetcode.com/problems/minimum-path-sum/
   question_text: |
     Given a `m x n` grid filled with non-negative numbers, find a path from
@@ -871,6 +883,7 @@
   category: arrays
   frequency: common
   signature: productExceptSelf(nums []int) []int
+  python_signature: 'def product_except_self(nums: list[int]) -> list[int]:'
   url: https://leetcode.com/problems/product-of-array-except-self/
   question_text: |
     Given an integer array `nums`, return an array `answer` such that `answer[i]` is equal to the product of all the elements of `nums` except `nums[i]`.
@@ -922,6 +935,7 @@
   category: stack
   frequency: common
   signature: isValid(s string) bool
+  python_signature: 'def is_valid(s: str) -> bool:'
   url: https://leetcode.com/problems/valid-parentheses/
   question_text: |
     Given a string `s` containing just the characters `'('`, `')'`, `'{'`, `'}'`, `'['` and `']'`, determine if the input string is valid.
@@ -990,6 +1004,7 @@
   frequency: common
   kind: list
   signature: mergeTwoLists(list1 *ListNode, list2 *ListNode) *ListNode
+  python_signature: 'def merge_two_lists(list1: ListNode | None, list2: ListNode | None) -> ListNode | None:'
   url: https://leetcode.com/problems/merge-two-sorted-lists/
   question_text: |
     You are given the heads of two sorted linked lists `list1` and `list2`.
@@ -1044,6 +1059,7 @@
   category: arrays
   frequency: common
   signature: maxProfit(prices []int) int
+  python_signature: 'def max_profit(prices: list[int]) -> int:'
   url: https://leetcode.com/problems/best-time-to-buy-and-sell-stock/
   question_text: |
     You are given an array `prices` where `prices[i]` is the price of a given stock on the `i-th` day.
@@ -1090,6 +1106,7 @@
   category: dynamic-programming
   frequency: common
   signature: climbStairs(n int) int
+  python_signature: 'def climb_stairs(n: int) -> int:'
   url: https://leetcode.com/problems/climbing-stairs/
   question_text: |
     You are climbing a staircase. It takes `n` steps to reach the top.
@@ -1130,6 +1147,7 @@
   category: arrays
   frequency: common
   signature: maxSubArray(nums []int) int
+  python_signature: 'def max_sub_array(nums: list[int]) -> int:'
   url: https://leetcode.com/problems/maximum-subarray/
   question_text: |
     Given an integer array `nums`, find the subarray with the largest sum, and return its sum.
@@ -1176,6 +1194,7 @@
   frequency: common
   kind: tree
   signature: invertTree(root *TreeNode) *TreeNode
+  python_signature: 'def invert_tree(root: TreeNode | None) -> TreeNode | None:'
   url: https://leetcode.com/problems/invert-binary-tree/
   question_text: |
     Given the `root` of a binary tree, invert the tree, and return its root.
@@ -1207,6 +1226,7 @@
   category: strings
   frequency: common
   signature: groupAnagrams(strs []string) [][]string
+  python_signature: 'def group_anagrams(strs: list[str]) -> list[list[str]]:'
   url: https://leetcode.com/problems/group-anagrams/
   question_text: |
     Given an array of strings `strs`, group the anagrams together. You can return the answer in any order.
@@ -1252,6 +1272,7 @@
   frequency: common
   kind: tree
   signature: isValidBST(root *TreeNode) bool
+  python_signature: 'def is_valid_bst(root: TreeNode | None) -> bool:'
   url: https://leetcode.com/problems/validate-binary-search-tree/
   question_text: |
     Given the root of a binary tree, determine if it is a valid binary search tree (BST).
@@ -1307,6 +1328,7 @@
   frequency: common
   kind: tree
   signature: levelOrder(root *TreeNode) [][]int
+  python_signature: 'def level_order(root: TreeNode | None) -> list[list[int]]:'
   url: https://leetcode.com/problems/binary-tree-level-order-traversal/
   question_text: |
     Given the root of a binary tree, return the level order traversal of its nodes' values. (i.e., from left to right, level by level).
@@ -1367,6 +1389,7 @@
   category: arrays
   frequency: common
   signature: maxArea(height []int) int
+  python_signature: 'def max_area(height: list[int]) -> int:'
   url: https://leetcode.com/problems/container-with-most-water/
   question_text: |
     You are given an integer array `height` of length `n`. There are `n` vertical lines drawn such that the two endpoints of the i-th line are `(i, 0)` and `(i, height[i])`.
@@ -1421,6 +1444,7 @@
   category: strings
   frequency: common
   signature: lengthOfLongestSubstring(s string) int
+  python_signature: 'def length_of_longest_substring(s: str) -> int:'
   url: https://leetcode.com/problems/longest-substring-without-repeating-characters/
   question_text: |
     Given a string `s`, find the length of the longest substring without repeating characters.
@@ -1474,6 +1498,7 @@
   category: dynamic-programming
   frequency: common
   signature: rob(nums []int) int
+  python_signature: 'def rob(nums: list[int]) -> int:'
   url: https://leetcode.com/problems/house-robber/
   question_text: |
     You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed, the only constraint stopping you from robbing each of them is that adjacent houses have security systems connected and it will automatically contact the police if two adjacent houses were broken into on the same night.
@@ -1529,6 +1554,7 @@
   frequency: common
   kind: list
   signature: mergeKLists(lists []*ListNode) *ListNode
+  python_signature: 'def merge_k_lists(lists: list[ListNode | None]) -> ListNode | None:'
   url: https://leetcode.com/problems/merge-k-sorted-lists/
   question_text: |
     You are given an array of `k` linked-lists `lists`, each linked-list is sorted in ascending order.
@@ -1599,6 +1625,7 @@
   category: graph
   frequency: common
   signature: ladderLength(beginWord string, endWord string, wordList []string) int
+  python_signature: 'def ladder_length(begin_word: str, end_word: str, word_list: list[str]) -> int:'
   url: https://leetcode.com/problems/word-ladder/
   question_text: |
     A transformation sequence from word `beginWord` to word `endWord` using a dictionary `wordList` is a sequence of words `beginWord = s0, s1, ..., sk = endWord` such that:
@@ -1671,6 +1698,7 @@
   category: arrays
   frequency: common
   signature: findMedianSortedArrays(nums1 []int, nums2 []int) float64
+  python_signature: 'def find_median_sorted_arrays(nums1: list[int], nums2: list[int]) -> float:'
   url: https://leetcode.com/problems/median-of-two-sorted-arrays/
   question_text: |
     Given two sorted arrays `nums1` and `nums2` of size `m` and `n` respectively, return the median of the two sorted arrays.
@@ -1752,6 +1780,7 @@
   category: arrays
   frequency: common
   signature: trap(height []int) int
+  python_signature: 'def trap(height: list[int]) -> int:'
   url: https://leetcode.com/problems/trapping-rain-water/
   question_text: |
     Given `n` non-negative integers representing an elevation map where the width of each bar is `1`, compute how much water it can trap after raining.
@@ -1805,6 +1834,7 @@
   category: strings
   frequency: common
   signature: isMatch(s string, p string) bool
+  python_signature: 'def is_match(s: str, p: str) -> bool:'
   url: https://leetcode.com/problems/regular-expression-matching/
   question_text: |
     Implement regular expression matching with support for `'.'` and `'*'`.
@@ -1881,6 +1911,7 @@
   category: arrays
   frequency: common
   signature: firstMissingPositive(nums []int) int
+  python_signature: 'def first_missing_positive(nums: list[int]) -> int:'
   url: https://leetcode.com/problems/first-missing-positive/
   question_text: |
     Given an unsorted integer array `nums`, return the smallest missing positive integer.
@@ -1933,6 +1964,7 @@
   category: stack
   frequency: common
   signature: largestRectangleArea(heights []int) int
+  python_signature: 'def largest_rectangle_area(heights: list[int]) -> int:'
   url: https://leetcode.com/problems/largest-rectangle-in-histogram/
   question_text: |
     Given an array of integers `heights` representing the histogram's bar height where the width of each bar is 1, return the area of the largest rectangle in the histogram.
@@ -1987,6 +2019,7 @@
   category: strings
   frequency: common
   signature: minWindow(s string, t string) string
+  python_signature: 'def min_window(s: str, t: str) -> str:'
   url: https://leetcode.com/problems/minimum-window-substring/
   question_text: |
     Given two strings `s` and `t` of lengths `m` and `n` respectively, return the minimum window substring of `s` such that every character in `t` (including duplicates) is included in the window. If there is no such substring, return the empty string `""`.
@@ -2067,6 +2100,7 @@
   category: strings
   frequency: rare
   signature: palindromePairs(words []string) [][]int
+  python_signature: 'def palindrome_pairs(words: list[str]) -> list[list[int]]:'
   url: https://leetcode.com/problems/palindrome-pairs/
   question_text: |
     Given a list of unique words, return all pairs of distinct indices `(i, j)` such that the concatenation of `words[i] + words[j]` is a palindrome.
@@ -2148,6 +2182,7 @@
   category: dynamic-programming
   frequency: uncommon
   signature: wordBreak(s string, wordDict []string) []string
+  python_signature: 'def word_break(s: str, word_dict: list[str]) -> list[str]:'
   url: https://leetcode.com/problems/word-break-ii/
   question_text: |
     Given a string `s` and a dictionary of strings `wordDict`, add spaces in `s` to construct a sentence where each word is a valid dictionary word. Return all such possible sentences in any order.
@@ -2215,6 +2250,7 @@
   category: greedy
   frequency: uncommon
   signature: candy(ratings []int) int
+  python_signature: 'def candy(ratings: list[int]) -> int:'
   url: https://leetcode.com/problems/candy/
   question_text: |
     There are `n` children standing in a line. Each child is assigned a rating value given in the integer array `ratings`.
@@ -2274,6 +2310,7 @@
   category: dynamic-programming
   frequency: rare
   signature: canCross(stones []int) bool
+  python_signature: 'def can_cross(stones: list[int]) -> bool:'
   url: https://leetcode.com/problems/frog-jump/
   question_text: |
     A frog is crossing a river. The river is divided into some number of units, and at each unit, there may or may not exist a stone. The frog can jump on a stone, but it must not jump into the water.
@@ -2339,6 +2376,7 @@
   category: stack
   frequency: uncommon
   signature: longestValidParentheses(s string) int
+  python_signature: 'def longest_valid_parentheses(s: str) -> int:'
   url: https://leetcode.com/problems/longest-valid-parentheses/
   question_text: |
     Given a string containing just the characters `'('` and `')'`, return the length of the longest valid (well-formed) parentheses substring.
@@ -2395,6 +2433,7 @@
   category: arrays
   frequency: common
   signature: merge(intervals [][]int) [][]int
+  python_signature: 'def merge(intervals: list[list[int]]) -> list[list[int]]:'
   url: https://leetcode.com/problems/merge-intervals/
   question_text: |
     Given an array of `intervals` where `intervals[i] = [starti, endi]`, merge all overlapping intervals, and return an array of the non-overlapping intervals that cover all the intervals in the input.
@@ -2449,6 +2488,7 @@
   category: matrix
   frequency: common
   signature: numIslands(grid [][]byte) int
+  python_signature: 'def num_islands(grid: list[list[str]]) -> int:'
   url: https://leetcode.com/problems/number-of-islands/
   question_text: |
     Given an `m x n` 2D binary grid `grid` which represents a map of `'1'`s (land) and `'0'`s (water), return the number of islands.

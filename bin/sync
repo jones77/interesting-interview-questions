@@ -26,6 +26,7 @@ generated() {
 	find questions -name README.md
 	find questions -path 'questions/*/*/go/go.mod'
 	find questions -path 'questions/*/*/go/*.go' -not -name '*_test.go'
+	find questions -path 'questions/*/*/python/*.py' -not -name 'test_*.py'
 }
 
 while IFS= read -r f; do
