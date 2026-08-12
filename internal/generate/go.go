@@ -17,6 +17,8 @@ func renderGoStub(s question.Spec) string {
 	switch s.Kind {
 	case "lru-cache":
 		b.WriteString(lruCacheStub(s))
+	case "time-based-kv-store":
+		b.WriteString(timeBasedKVStoreStub(s))
 	case "codec-tree":
 		b.WriteString(codecTreeStub(s))
 	case "max-path-tree":
@@ -95,6 +97,22 @@ func (c *LRUCache) Get(key int) int {
 }
 
 func (c *LRUCache) Put(key int, value int) {}
+`
+}
+
+func timeBasedKVStoreStub(s question.Spec) string {
+	return stubDoc(s, "TimeMap") + `
+type TimeMap struct{}
+
+func Constructor() *TimeMap {
+	return &TimeMap{}
+}
+
+func (t *TimeMap) Set(key string, value string, timestamp int) {}
+
+func (t *TimeMap) Get(key string, timestamp int) string {
+	return ""
+}
 `
 }
 
