@@ -43,13 +43,18 @@ while IFS= read -r f; do
 done < <(generated)
 
 if $dirty; then
-	while IFS= read -r f; do
-		restore "$f"
-	done < <(generated)
-	echo ""
-	echo "Aborting — generated files have been modified (implemented?)."
-	echo "Set FORCE=1 to overwrite."
-	exit 1
+	if [ "${FORCE:-}" = "1" ]; then
+		echo ""
+		echo "FORCE=1 set; overwriting generated files."
+	else
+		while IFS= read -r f; do
+			restore "$f"
+		done < <(generated)
+		echo ""
+		echo "Aborting — generated files have been modified (implemented?)."
+		echo "Set FORCE=1 to overwrite."
+		exit 1
+	fi
 fi
 
 echo "  all clean"
