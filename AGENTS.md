@@ -58,5 +58,6 @@ tests. `./bin/test` runs every problem's test suite. The root `go test
 
 `.editorconfig` enforces 120-char lines,
 2-space indent for YAML/Markdown,
-tabs for Go files (gofmt standard).
+tabs for Go files (gofmt standard),
+4-space indent for Python files (PEP 8).
 Use [semantic line breaks](https://sembr.org).
